@@ -2,11 +2,12 @@ name: 获取M3U播放列表
 
 on:
   schedule:
+    # 每天凌晨2点运行一次
     - cron: '0 */5 * * *'
-  workflow_dispatch:
+  workflow_dispatch:  # 允许手动触发
 
 permissions:
-  contents: write
+  contents: write  # 赋予写入权限
 
 jobs:
   fetch-m3u:
@@ -21,57 +22,120 @@ jobs:
         # 请将下面的URL替换为你的M3U链接
         M3U_URL="https://raw.githubusercontent.com/Jsnzkpg/Jsnzkpg/Jsnzkpg/Jsnzkpg1.m3u"
         
-        echo "正在下载M3U内容..."
+        # 下载M3U内容
+        echo "正在下载M3U文件..."
+        curl -L -o raw_playlist.txt "$M3U_URL"
         
-        # 使用curl下载并保存到当前目录
-        if curl -L -f -o kulaoTV.txt "$M3U_URL"; then
-          echo "✅ 文件下载成功"
-          echo "# 更新时间: $(date '+%Y-%m-%d %H:%M:%S UTC')" >> kulaoTV.txt
-          echo "文件内容预览（前10行）："
-          head -n 10 kulaoTV.txt
-        else
-          echo "❌ 文件下载失败"
-          exit 1
-        fi
+        # 添加时间戳信息到原始文件
+        echo "" >> raw_playlist.txt
+        echo "# 原始文件更新时间: $(date '+%Y-%m-%d %H:%M:%S UTC')" >> raw_playlist.txt
         
-    - name: 验证文件
+    - name: 过滤内容
+      run: |
+        echo "开始过滤内容..."
+        echo "# 过滤后的M3U播放列表" > kulaoTV.txt
+        echo "# 创建时间: $(date '+%Y-%m-%d %H:%M:%S UTC')" >> kulaoTV.txt
+        echo "# 过滤规则: 移除包含 'TG频道', '央卫', '地方', '监控', '三网' 的内容" >> kulaoTV.txt
+        echo "" >> kulaoTV.txt
+        
+        # 读取原始文件并过滤
+        skip_next=false
+        
+        while IFS= read -r line; do
+          # 检查是否是注释行（以#开头）
+          if [[ $line == \#* ]]; then
+            # 保留所有注释行（除了过滤词相关的）
+            if ! echo "$line" | grep -qiE "TG频道|央卫|地方|监控|三网"; then
+              echo "$line" >> kulaoTV.txt
+            fi
+            skip_next=false
+          else
+            # 如果是URL行（不是注释行）
+            if [ "$skip_next" = false ]; then
+              # 检查上一行（通常包含频道信息）是否包含过滤词
+              # 这里我们需要回溯检查上一行的内容，但因为是逐行读取，所以需要使用不同的方法
+              echo "$line" >> kulaoTV.txt
+            else
+              skip_next=false
+            fi
+          fi
+        done < raw_playlist.txt
+        
+        echo "过滤完成"
+        
+    - name: 更精确的过滤（方法二）
+      run: |
+        echo "进行二次过滤..."
+        
+        # 创建临时文件
+        temp_file="temp_filtered.txt"
+        
+        # 使用awk进行更精确的过滤
+        awk '
+        BEGIN { skip = 0 }
+        {
+          # 检查当前行是否包含过滤词
+          if ($0 ~ /TG频道|央卫|地方|监控|三网/) {
+            skip = 1
+            next
+          }
+          
+          # 如果上一行被标记为跳过，这一行也跳过（通常是URL行）
+          if (skip == 1) {
+            skip = 0
+            next
+          }
+          
+          # 打印符合条件的行
+          print $0
+        }
+        ' kulaoTV.txt > "$temp_file"
+        
+        # 用过滤后的内容替换原文件
+        mv "$temp_file" kulaoTV.txt
+        
+        # 显示过滤统计
+        original_lines=$(wc -l < raw_playlist.txt)
+        filtered_lines=$(wc -l < kulaoTV.txt)
+        removed_lines=$((original_lines - filtered_lines))
+        
+        echo "原始行数: $original_lines"
+        echo "过滤后行数: $filtered_lines"
+        echo "移除行数: $removed_lines"
+        
+        # 显示过滤后的内容预览
+        echo "过滤后内容预览（前20行）："
+        head -n 20 kulaoTV.txt
+        
+    - name: 检查文件是否有变化
+      id: check_changes
       run: |
         if [ -f "kulaoTV.txt" ]; then
-          echo "✅ 文件已创建"
-          echo "文件大小: $(wc -c < kulaoTV.txt) 字节"
-          echo "文件位置: $(pwd)/kulaoTV.txt"
+          if git diff --quiet kulaoTV.txt; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "文件无变化"
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+            echo "文件有变化"
+          fi
         else
-          echo "❌ 文件未创建"
-          exit 1
+          echo "changed=true" >> $GITHUB_OUTPUT
+          echo "文件不存在，将创建新文件"
         fi
         
-    - name: 提交和推送文件
+    - name: 强制推送更新
+      if: steps.check_changes.outputs.changed == 'true'
       run: |
-        # 配置Git
         git config user.name "github-actions"
         git config user.email "github-actions@github.com"
         
-        # 显示当前目录内容
-        echo "当前目录内容："
-        ls -la
+        # 强制添加文件
+        git add -f kulaoTV.txt
         
-        # 确保文件存在并添加到Git
-        if [ -f "kulaoTV.txt" ]; then
-          echo "正在添加文件到Git..."
-          git add kulaoTV.txt
-          
-          # 检查是否有更改
-          if git diff --cached --quiet; then
-            echo "文件没有变化，无需提交"
-          else
-            echo "文件有变化，正在提交..."
-            git commit -m "更新播放列表 - $(date '+%Y-%m-%d %H:%M:%S')"
-            
-            echo "正在推送更改..."
-            git push origin HEAD
-            echo "✅ 推送成功"
-          fi
-        else
-          echo "❌ kulaoTV.txt 文件不存在"
-          exit 1
-        fi
+        # 提交更改
+        git commit -m "更新过滤后的播放列表 - $(date '+%Y-%m-%d %H:%M:%S')"
+        
+        # 强制推送
+        git push origin HEAD --force
+        
+        echo "✅ 已强制推送更新"
