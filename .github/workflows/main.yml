@@ -2,7 +2,7 @@ name: 提取并处理M3U频道
 
 on:
   schedule:
-    - cron: '0 3 * * *'
+    - cron: '0 */3 * * *'
   workflow_dispatch:
 
 jobs:
@@ -36,7 +36,7 @@ jobs:
         echo "#EXTM3U" > kulaoTV.m3u
         
         # 定义需要保留的group-title
-        patterns=(
+        group_patterns=(
           "🎞️电影直播"
           "📺电视剧直播"
           "💽纪录片直播"
@@ -44,10 +44,20 @@ jobs:
           "🏀[联通]咪视界直播"
         )
         
+        # 定义需要保留的tvg-name
+        tvg_patterns=(
+          "凤凰中文"
+          "凤凰资讯"
+          "鳳凰中文"
+        )
+        
         # 使用awk处理文件
-        awk -v patterns="${patterns[*]}" '
+        awk -v group_patterns="${group_patterns[*]}" -v tvg_patterns="${tvg_patterns[*]}" '
         BEGIN {
-          split(patterns, pat_array, " ")
+          # 分割group-title模式
+          split(group_patterns, group_array, " ")
+          # 分割tvg-name模式
+          split(tvg_patterns, tvg_array, " ")
           channel_count = 0
         }
         
@@ -56,16 +66,26 @@ jobs:
           current_line = $0
           matched = 0
           
-          # 检查是否匹配任何模式
-          for (i in pat_array) {
-            if (index(current_line, "group-title=\"" pat_array[i] "\"")) {
+          # 检查是否匹配任何group-title模式
+          for (i in group_array) {
+            if (index(current_line, "group-title=\"" group_array[i] "\"")) {
               matched = 1
               break
             }
           }
           
+          # 如果没匹配到group-title，检查是否匹配tvg-name模式
+          if (!matched) {
+            for (i in tvg_array) {
+              if (index(current_line, "tvg-name=\"" tvg_array[i] "\"")) {
+                matched = 1
+                break
+              }
+            }
+          }
+          
           if (matched) {
-            # 进行替换
+            # 进行group-title替换
             gsub(/group-title="🎞️电影直播"/, "group-title=\"电影直播\"", current_line)
             gsub(/group-title="📺电视剧直播"/, "group-title=\"电视剧直播\"", current_line)
             gsub(/group-title="💽纪录片直播"/, "group-title=\"纪录片直播\"", current_line)
@@ -99,6 +119,9 @@ jobs:
         echo ""
         echo "各分类频道数量："
         grep "group-title=" kulaoTV.m3u | grep -o 'group-title="[^"]*"' | sort | uniq -c
+        echo ""
+        echo "凤凰系列频道："
+        grep -E 'tvg-name="(凤凰中文|凤凰资讯|鳳凰中文)"' kulaoTV.m3u | sed 's/.*tvg-name="\([^"]*\)".*/\1/' | sort | uniq -c
         echo "----------------------------------------"
         
     - name: 检查文件有效性
@@ -135,4 +158,20 @@ jobs:
         else
           echo "❌ 错误：kulaoTV.m3u文件不存在"
           exit 1
+        fi
+        
+    - name: 提取凤凰频道到单独文件（可选）
+      run: |
+        echo "#EXTM3U" > fenghuang_channels.m3u
+        grep -B1 -E 'tvg-name="(凤凰中文|凤凰资讯|鳳凰中文)"' kulaoTV.m3u | grep -v "^--$" >> fenghuang_channels.m3u
+        
+        if [ -s fenghuang_channels.m3u ] && [ $(grep -c "^#EXTINF" fenghuang_channels.m3u) -gt 0 ]; then
+          echo "✅ 已提取凤凰频道到 fenghuang_channels.m3u"
+          echo "凤凰频道数量：$(grep -c "^#EXTINF" fenghuang_channels.m3u)"
+          
+          # 可选：也提交凤凰频道的单独文件
+          git add fenghuang_channels.m3u
+        else
+          echo "未找到凤凰系列频道"
+          rm -f fenghuang_channels.m3u
         fi
