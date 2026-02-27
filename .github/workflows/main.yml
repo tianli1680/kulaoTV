@@ -20,7 +20,7 @@ jobs:
     - name: 获取M3U内容
       run: |
         # 请将下面的URL替换为你的M3U链接
-        M3U_URL="你的M3U链接地址"
+        M3U_URL="https://raw.githubusercontent.com/Jsnzkpg/Jsnzkpg/Jsnzkpg/Jsnzkpg1.m3u"
         
         # 下载M3U内容
         curl -L -o kulaoTV.txt "$M3U_URL"
