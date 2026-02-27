@@ -1,0 +1,393 @@
+#EXTM3U
+#EXTINF:-1 group-title="电影直播" tvg-name="邵氏电影" tvg-logo="https://epg.112114.xyz/logo/邵氏电影.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",邵氏电影
+http://38.75.136.137:98/gslb/dsdqpub/lbssdy.m3u8?auth=testpub
+#EXTINF:-1 group-title="电影直播" tvg-name="邵氏武侠" tvg-logo="https://epg.112114.xyz/logo/邵氏武侠.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",邵氏武侠
+http://38.75.136.137:98/gslb/dsdqpub/lbsswx.m3u8?auth=testpub
+#EXTINF:-1 group-title="电影直播" tvg-name="邵氏动作" tvg-logo="https://epg.112114.xyz/logo/邵氏动作.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",邵氏动作
+http://38.75.136.137:98/gslb/dsdqpub/lbssdz.m3u8?auth=testpub
+#EXTINF:-1 group-title="电影直播" tvg-name="邵氏喜剧" tvg-logo="https://epg.112114.xyz/logo/邵氏喜剧.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",邵氏喜剧
+http://38.75.136.137:98/gslb/dsdqpub/lbssxj.m3u8?auth=testpub
+#EXTINF:-1 group-title="电影直播" tvg-name="华数电影" tvg-logo="https://epg.112114.xyz/logo/华数电影.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",华数电影
+http://hmfs.f3322.net:3388/hls/40/index.m3u8
+#EXTINF:-1 group-title="电影直播" tvg-name="华数动作影院" tvg-logo="https://epg.112114.xyz/logo/华数动作影院.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",华数动作影院
+http://113.25.252.226:9901/tsfile/live/1002_1.m3u8?key=txiptv&playlive=1&authid=0
+#EXTINF:-1 group-title="电影直播" tvg-name="华数经典电影" tvg-logo="https://epg.112114.xyz/logo/华数经典电影.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",华数经典电影
+http://123.129.70.178:9901/tsfile/live/1004_1.m3u8?key=txiptv&playlive=1&authid=0
+#EXTINF:-1 group-title="电影直播" tvg-name="CHC家庭影院" tvg-logo="https://epg.112114.xyz/logo/CHC家庭影院.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",CHC家庭影院
+http://38.75.136.137:98/gslb/dsdqpub/chcjt.m3u8?auth=testpub
+#EXTINF:-1 group-title="电影直播" tvg-name="CHC家庭影院" tvg-logo="https://epg.112114.xyz/logo/CHC家庭影院.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",CHC家庭影院
+http://27.41.245.32:801/hls/905/index.m3u8
+#EXTINF:-1 group-title="电影直播" tvg-name="CHC家庭影院" tvg-logo="https://epg.112114.xyz/logo/CHC家庭影院.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",CHC家庭影院
+http://go.bkpcp.top/mg/jtyy
+#EXTINF:-1 group-title="电影直播" tvg-name="CHC动作电影" tvg-logo="https://epg.112114.xyz/logo/CHC动作电影.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",CHC动作电影
+http://38.75.136.137:98/gslb/dsdqpub/chcdz.m3u8?auth=testpub
+#EXTINF:-1 group-title="电影直播" tvg-name="CHC动作电影" tvg-logo="https://epg.112114.xyz/logo/CHC动作电影.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",CHC动作电影
+http://go.bkpcp.top/mg/dzdy
+#EXTINF:-1 group-title="电影直播" tvg-name="CHC影迷电影" tvg-logo="https://epg.112114.xyz/logo/CHC影迷电影.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",CHC影迷电影
+http://38.75.136.137:98/gslb/dsdqpub/chchd.m3u8?auth=testpub
+#EXTINF:-1 group-title="电影直播" tvg-name="CHC影迷电影" tvg-logo="https://epg.112114.xyz/logo/CHC影迷电影.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",CHC影迷电影
+http://go.bkpcp.top/mg/ymdy
+#EXTINF:-1 group-title="电影直播" tvg-name="1905环球经典" tvg-logo="https://epg.112114.xyz/logo/1905环球经典.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",1905环球经典
+http://xxwx.yoesun.com/xxw/1905电影网.php?id=1905b
+#EXTINF:-1 group-title="电影直播" tvg-name="1905电影网" tvg-logo="https://epg.112114.xyz/logo/1905电影网.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",1905电影网
+http://xxwx.yoesun.com/xxw/1905电影网.php?id=1905
+#EXTINF:-1 group-title="电影直播" tvg-name="新视觉HD" tvg-logo="https://epg.112114.xyz/logo/新视觉HD.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",新视觉HD
+http://gat.bkpcp.top/ymg.php?id=mlzq
+#EXTINF:-1 group-title="电影直播" tvg-name="经典影艺" tvg-logo="https://epg.112114.xyz/logo/经典影艺.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",经典影艺
+rtmp://live.gxrb.com.cn/pull/red_movies_0501?m3u8?key=txiptv
+#EXTINF:-1 group-title="电影直播" tvg-name="周星驰专场" tvg-logo="https://epg.112114.xyz/logo/周星驰专场.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",周星驰专场
+https://isus.cc/php/huya.php?id=11336587
+#EXTINF:-1 group-title="电影直播" tvg-name="李连杰专场" tvg-logo="https://epg.112114.xyz/logo/李连杰专场.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",李连杰专场
+https://isus.cc/php/huya.php?id=11342390
+#EXTINF:-1 group-title="电影直播" tvg-name="刘德华专场" tvg-logo="https://epg.112114.xyz/logo/刘德华专场.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",刘德华专场
+https://isus.cc/php/huya.php?id=11342424
+#EXTINF:-1 group-title="电影直播" tvg-name="林正英专场" tvg-logo="https://epg.112114.xyz/logo/林正英专场.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",林正英专场
+https://isus.cc/php/huya.php?id=11342421
+#EXTINF:-1 group-title="电影直播" tvg-name="甄子丹专场" tvg-logo="https://epg.112114.xyz/logo/甄子丹专场.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",甄子丹专场
+https://isus.cc/php/huya.php?id=11352935
+#EXTINF:-1 group-title="电影直播" tvg-name="沈腾专场" tvg-logo="https://epg.112114.xyz/logo/沈腾专场.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",沈腾专场
+https://isus.cc/php/huya.php?id=11601968
+#EXTINF:-1 group-title="电影直播" tvg-name="黄渤专场" tvg-logo="https://epg.112114.xyz/logo/黄渤专场.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",黄渤专场
+https://isus.cc/php/huya.php?id=11352876
+#EXTINF:-1 group-title="电影直播" tvg-name="周润发专场" tvg-logo="https://epg.112114.xyz/logo/周润发专场.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",周润发专场
+https://isus.cc/php/huya.php?id=11342387
+#EXTINF:-1 group-title="电影直播" tvg-name="成龙专场" tvg-logo="https://epg.112114.xyz/logo/成龙专场.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",成龙专场
+https://isus.cc/php/huya.php?id=11342386
+#EXTINF:-1 group-title="电影直播" tvg-name="古天乐专场" tvg-logo="https://epg.112114.xyz/logo/古天乐专场.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",古天乐专场
+https://isus.cc/php/huya.php?id=29982675
+#EXTINF:-1 group-title="电影直播" tvg-name="王晶专场" tvg-logo="https://epg.112114.xyz/logo/王晶专场.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",王晶专场
+https://isus.cc/php/huya.php?id=11602058
+#EXTINF:-1 group-title="电影直播" tvg-name="吴京专场" tvg-logo="https://epg.112114.xyz/logo/吴京专场.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",吴京专场
+https://isus.cc/php/huya.php?id=11602077
+#EXTINF:-1 group-title="电影直播" tvg-name="洪金宝专场" tvg-logo="https://epg.112114.xyz/logo/洪金宝专场.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",洪金宝专场
+https://isus.cc/php/huya.php?id=11279251
+#EXTINF:-1 group-title="电影直播" tvg-name="徐克专场" tvg-logo="https://epg.112114.xyz/logo/徐克专场.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",徐克专场
+https://isus.cc/php/huya.php?id=11352909
+#EXTINF:-1 group-title="电影直播" tvg-name="徐峥专场" tvg-logo="https://epg.112114.xyz/logo/徐峥专场.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",徐峥专场
+https://isus.cc/php/huya.php?id=11602043
+#EXTINF:-1 group-title="电影直播" tvg-name="邓超专场" tvg-logo="https://epg.112114.xyz/logo/邓超专场.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",邓超专场
+https://isus.cc/php/huya.php?id=11336592
+#EXTINF:-1 group-title="电影直播" tvg-name="梁家辉专场" tvg-logo="https://epg.112114.xyz/logo/梁家辉专场.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",梁家辉专场
+https://isus.cc/php/huya.php?id=11342429
+#EXTINF:-1 group-title="电影直播" tvg-name="张卫健专场" tvg-logo="https://epg.112114.xyz/logo/张卫健专场.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",张卫健专场
+https://isus.cc/php/huya.php?id=11342423
+#EXTINF:-1 group-title="电影直播" tvg-name="王宝强专场" tvg-logo="https://epg.112114.xyz/logo/王宝强专场.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",王宝强专场
+https://isus.cc/php/huya.php?id=30080251
+#EXTINF:-1 group-title="电影直播" tvg-name="陈小春专场" tvg-logo="https://epg.112114.xyz/logo/陈小春专场.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",陈小春专场
+https://isus.cc/php/huya.php?id=11336719
+#EXTINF:-1 group-title="电影直播" tvg-name="郭富城专场" tvg-logo="https://epg.112114.xyz/logo/郭富城专场.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",郭富城专场
+https://isus.cc/php/huya.php?id=20985865
+#EXTINF:-1 group-title="电影直播" tvg-name="吴镇宇专场" tvg-logo="https://epg.112114.xyz/logo/吴镇宇专场.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",吴镇宇专场
+https://isus.cc/php/huya.php?id=23865096
+#EXTINF:-1 group-title="电影直播" tvg-name="陆小凤专场" tvg-logo="https://epg.112114.xyz/logo/陆小凤专场.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",陆小凤专场
+https://isus.cc/php/huya.php?id=11342427
+#EXTINF:-1 group-title="电影直播" tvg-name="强森专场" tvg-logo="https://epg.112114.xyz/logo/强森专场.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",强森专场
+https://isus.cc/php/huya.php?id=21059581
+#EXTINF:-1 group-title="电影直播" tvg-name="斯坦森专场" tvg-logo="https://epg.112114.xyz/logo/斯坦森专场.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",斯坦森专场
+https://isus.cc/php/huya.php?id=21059588
+#EXTINF:-1 group-title="电影直播" tvg-name="马东锡专场" tvg-logo="https://epg.112114.xyz/logo/马东锡专场.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",马东锡专场
+https://isus.cc/php/huya.php?id=21059556
+#EXTINF:-1 group-title="电影直播" tvg-name="灾难片系列" tvg-logo="https://epg.112114.xyz/logo/灾难片系列.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",灾难片系列
+https://isus.cc/php/huya.php?id=23728647
+#EXTINF:-1 group-title="电影直播" tvg-name="贺岁片系列" tvg-logo="https://epg.112114.xyz/logo/贺岁片系列.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",贺岁片系列
+https://isus.cc/php/huya.php?id=11601986
+#EXTINF:-1 group-title="电影直播" tvg-name="科幻片系列" tvg-logo="https://epg.112114.xyz/logo/科幻片系列.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",科幻片系列
+https://isus.cc/php/huya.php?id=11352965
+#EXTINF:-1 group-title="电影直播" tvg-name="丧尸片系列" tvg-logo="https://epg.112114.xyz/logo/丧尸片系列.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",丧尸片系列
+https://isus.cc/php/huya.php?id=24314160
+#EXTINF:-1 group-title="电影直播" tvg-name="怪兽片系列" tvg-logo="https://epg.112114.xyz/logo/怪兽片系列.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",怪兽片系列
+https://isus.cc/php/huya.php?id=29982674
+#EXTINF:-1 group-title="电影直播" tvg-name="战争片系列" tvg-logo="https://epg.112114.xyz/logo/战争片系列.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",战争片系列
+https://isus.cc/php/huya.php?id=21059618
+#EXTINF:-1 group-title="电影直播" tvg-name="硬汉片系列" tvg-logo="https://epg.112114.xyz/logo/硬汉片系列.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",硬汉片系列
+https://isus.cc/php/huya.php?id=23864973
+#EXTINF:-1 group-title="电影直播" tvg-name="竞速片系列" tvg-logo="https://epg.112114.xyz/logo/竞速片系列.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",竞速片系列
+https://isus.cc/php/huya.php?id=29982635
+#EXTINF:-1 group-title="电影直播" tvg-name="动作片系列" tvg-logo="https://epg.112114.xyz/logo/动作片系列.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",动作片系列
+https://isus.cc/php/huya.php?id=10871113
+#EXTINF:-1 group-title="电影直播" tvg-name="爱情片系列" tvg-logo="https://epg.112114.xyz/logo/爱情片系列.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",爱情片系列
+https://isus.cc/php/huya.php?id=29982639
+#EXTINF:-1 group-title="电影直播" tvg-name="犯罪片系列" tvg-logo="https://epg.112114.xyz/logo/犯罪片系列.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",犯罪片系列
+https://isus.cc/php/huya.php?id=30080165
+#EXTINF:-1 group-title="电影直播" tvg-name="奇幻片系列" tvg-logo="https://epg.112114.xyz/logo/奇幻片系列.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",奇幻片系列
+https://isus.cc/php/huya.php?id=26355847
+#EXTINF:-1 group-title="电影直播" tvg-name="冒险片系列" tvg-logo="https://epg.112114.xyz/logo/冒险片系列.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",冒险片系列
+https://isus.cc/php/huya.php?id=21059566
+#EXTINF:-1 group-title="电影直播" tvg-name="盗墓片系列" tvg-logo="https://epg.112114.xyz/logo/盗墓片系列.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",盗墓片系列
+https://isus.cc/php/huya.php?id=11601981
+#EXTINF:-1 group-title="电影直播" tvg-name="穿越片系列" tvg-logo="https://epg.112114.xyz/logo/穿越片系列.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",穿越片系列
+https://isus.cc/php/huya.php?id=29465892
+#EXTINF:-1 group-title="电影直播" tvg-name="悬疑片系列" tvg-logo="https://epg.112114.xyz/logo/悬疑片系列.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",悬疑片系列
+https://isus.cc/php/huya.php?id=21059530
+#EXTINF:-1 group-title="电影直播" tvg-name="喜剧片系列" tvg-logo="https://epg.112114.xyz/logo/喜剧片系列.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",喜剧片系列
+https://isus.cc/php/huya.php?id=11602044
+#EXTINF:-1 group-title="电影直播" tvg-name="英雄片系列" tvg-logo="https://epg.112114.xyz/logo/英雄片系列.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",英雄片系列
+https://isus.cc/php/huya.php?id=11601980
+#EXTINF:-1 group-title="电影直播" tvg-name="枪战片系列" tvg-logo="https://epg.112114.xyz/logo/枪战片系列.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",枪战片系列
+https://isus.cc/php/huya.php?id=21059579
+#EXTINF:-1 group-title="电影直播" tvg-name="武侠片系列" tvg-logo="https://epg.112114.xyz/logo/武侠片系列.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",武侠片系列
+https://isus.cc/php/huya.php?id=29982611
+#EXTINF:-1 group-title="电影直播" tvg-name="复仇片系列" tvg-logo="https://epg.112114.xyz/logo/复仇片系列.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",复仇片系列
+https://isus.cc/php/huya.php?id=29982645
+#EXTINF:-1 group-title="电影直播" tvg-name="星球片系列" tvg-logo="https://epg.112114.xyz/logo/星球片系列.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",星球片系列
+https://isus.cc/php/huya.php?id=30080234
+#EXTINF:-1 group-title="电影直播" tvg-name="校园片系列" tvg-logo="https://epg.112114.xyz/logo/校园片系列.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",校园片系列
+https://isus.cc/php/huya.php?id=11352934
+#EXTINF:-1 group-title="电影直播" tvg-name="警匪片系列" tvg-logo="https://epg.112114.xyz/logo/警匪片系列.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",警匪片系列
+https://isus.cc/php/huya.php?id=30041512
+#EXTINF:-1 group-title="电影直播" tvg-name="谍战片系列" tvg-logo="https://epg.112114.xyz/logo/谍战片系列.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",谍战片系列
+https://isus.cc/php/huya.php?id=26355810
+#EXTINF:-1 group-title="电影直播" tvg-name="动画片系列" tvg-logo="https://epg.112114.xyz/logo/动画片系列.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",动画片系列
+https://isus.cc/php/huya.php?id=11352878
+#EXTINF:-1 group-title="电影直播" tvg-name="恐怖片系列" tvg-logo="https://epg.112114.xyz/logo/恐怖片系列.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",恐怖片系列
+https://isus.cc/php/huya.php?id=24884334
+#EXTINF:-1 group-title="电影直播" tvg-name="惊悚片系列" tvg-logo="https://epg.112114.xyz/logo/惊悚片系列.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",惊悚片系列
+https://isus.cc/php/huya.php?id=26355802
+#EXTINF:-1 group-title="电影直播" tvg-name="僵尸片系列" tvg-logo="https://epg.112114.xyz/logo/僵尸片系列.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",僵尸片系列
+https://isus.cc/php/huya.php?id=11352917
+#EXTINF:-1 group-title="电影直播" tvg-name="音乐片系列" tvg-logo="https://epg.112114.xyz/logo/音乐片系列.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",音乐片系列
+https://isus.cc/php/huya.php?id=23860057
+#EXTINF:-1 group-title="电影直播" tvg-name="杀手片系列" tvg-logo="https://epg.112114.xyz/logo/杀手片系列.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",杀手片系列
+https://isus.cc/php/huya.php?id=23728689
+#EXTINF:-1 group-title="电影直播" tvg-name="体育片系列" tvg-logo="https://epg.112114.xyz/logo/体育片系列.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",体育片系列
+https://isus.cc/php/huya.php?id=23864480
+#EXTINF:-1 group-title="电影直播" tvg-name="西部片系列" tvg-logo="https://epg.112114.xyz/logo/西部片系列.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",西部片系列
+https://isus.cc/php/huya.php?id=30080177
+#EXTINF:-1 group-title="电影直播" tvg-name="香港片系列" tvg-logo="https://epg.112114.xyz/logo/香港片系列.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",香港片系列
+https://isus.cc/php/huya.php?id=29982660
+#EXTINF:-1 group-title="电影直播" tvg-name="印度片系列" tvg-logo="https://epg.112114.xyz/logo/印度片系列.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",印度片系列
+https://isus.cc/php/huya.php?id=26355799
+#EXTINF:-1 group-title="电影直播" tvg-name="热门片系列" tvg-logo="https://epg.112114.xyz/logo/热门片系列.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",热门片系列
+https://isus.cc/php/huya.php?id=880261
+#EXTINF:-1 group-title="电影直播" tvg-name="高分片系列" tvg-logo="https://epg.112114.xyz/logo/高分片系列.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",高分片系列
+https://isus.cc/php/huya.php?id=23902225
+#EXTINF:-1 group-title="电影直播" tvg-name="短片系列" tvg-logo="https://epg.112114.xyz/logo/短片系列.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",短片系列
+https://isus.cc/php/huya.php?id=17098448
+#EXTINF:-1 group-title="电视剧直播" tvg-name="探案剧专区" tvg-logo="https://epg.112114.xyz/logo/探案剧专区.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",探案剧专区
+https://isus.cc/php/huya.php?id=20969144
+#EXTINF:-1 group-title="电视剧直播" tvg-name="都市剧专区" tvg-logo="https://epg.112114.xyz/logo/都市剧专区.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",都市剧专区
+https://isus.cc/php/huya.php?id=29982666
+#EXTINF:-1 group-title="电视剧直播" tvg-name="刑侦剧专区" tvg-logo="https://epg.112114.xyz/logo/刑侦剧专区.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",刑侦剧专区
+https://isus.cc/php/huya.php?id=20969130
+#EXTINF:-1 group-title="电视剧直播" tvg-name="家庭剧专区" tvg-logo="https://epg.112114.xyz/logo/家庭剧专区.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",家庭剧专区
+https://isus.cc/php/huya.php?id=11352872
+#EXTINF:-1 group-title="电视剧直播" tvg-name="经典剧专区" tvg-logo="https://epg.112114.xyz/logo/经典剧专区.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",经典剧专区
+https://isus.cc/php/huya.php?id=11602081
+#EXTINF:-1 group-title="电视剧直播" tvg-name="怀旧剧专区" tvg-logo="https://epg.112114.xyz/logo/怀旧剧专区.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",怀旧剧专区
+https://isus.cc/php/huya.php?id=30080241
+#EXTINF:-1 group-title="电视剧直播" tvg-name="僵尸剧专区" tvg-logo="https://epg.112114.xyz/logo/僵尸剧专区.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",僵尸剧专区
+https://isus.cc/php/huya.php?id=23865148
+#EXTINF:-1 group-title="电视剧直播" tvg-name="抗战剧专区" tvg-logo="https://epg.112114.xyz/logo/抗战剧专区.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",抗战剧专区
+https://isus.cc/php/huya.php?id=30080238
+#EXTINF:-1 group-title="电视剧直播" tvg-name="台湾剧专区" tvg-logo="https://epg.112114.xyz/logo/台湾剧专区.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",台湾剧专区
+https://isus.cc/php/huya.php?id=11342436
+#EXTINF:-1 group-title="电视剧直播" tvg-name="韩国剧专区" tvg-logo="https://epg.112114.xyz/logo/韩国剧专区.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",韩国剧专区
+https://isus.cc/php/huya.php?id=23863787
+#EXTINF:-1 group-title="电视剧直播" tvg-name="美国剧专区" tvg-logo="https://epg.112114.xyz/logo/美国剧专区.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",美国剧专区
+https://isus.cc/php/huya.php?id=30080138
+#EXTINF:-1 group-title="电视剧直播" tvg-name="英国剧专区" tvg-logo="https://epg.112114.xyz/logo/英国剧专区.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",英国剧专区
+https://isus.cc/php/huya.php?id=29982659
+#EXTINF:-1 group-title="电视剧直播" tvg-name="校园剧专区" tvg-logo="https://epg.112114.xyz/logo/校园剧专区.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",校园剧专区
+https://isus.cc/php/huya.php?id=30080228
+#EXTINF:-1 group-title="电视剧直播" tvg-name="谍战剧专区" tvg-logo="https://epg.112114.xyz/logo/谍战剧专区.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",谍战剧专区
+https://isus.cc/php/huya.php?id=30080225
+#EXTINF:-1 group-title="电视剧直播" tvg-name="古装剧专区" tvg-logo="https://epg.112114.xyz/logo/古装剧专区.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",古装剧专区
+https://isus.cc/php/huya.php?id=24314158
+#EXTINF:-1 group-title="电视剧直播" tvg-name="乡村剧专区" tvg-logo="https://epg.112114.xyz/logo/乡村剧专区.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",乡村剧专区
+https://isus.cc/php/huya.php?id=30080255
+#EXTINF:-1 group-title="电视剧直播" tvg-name="偶像剧专区" tvg-logo="https://epg.112114.xyz/logo/偶像剧专区.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",偶像剧专区
+https://isus.cc/php/huya.php?id=11601964
+#EXTINF:-1 group-title="电视剧直播" tvg-name="爱情剧专区" tvg-logo="https://epg.112114.xyz/logo/爱情剧专区.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",爱情剧专区
+https://isus.cc/php/huya.php?id=29982671
+#EXTINF:-1 group-title="电视剧直播" tvg-name="搞笑剧专区" tvg-logo="https://epg.112114.xyz/logo/搞笑剧专区.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",搞笑剧专区
+https://isus.cc/php/huya.php?id=21059634
+#EXTINF:-1 group-title="电视剧直播" tvg-name="武侠剧专区" tvg-logo="https://epg.112114.xyz/logo/武侠剧专区.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",武侠剧专区
+https://isus.cc/php/huya.php?id=20985816
+#EXTINF:-1 group-title="电视剧直播" tvg-name="穿越剧专区" tvg-logo="https://epg.112114.xyz/logo/穿越剧专区.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",穿越剧专区
+https://isus.cc/php/huya.php?id=26355857
+#EXTINF:-1 group-title="电视剧直播" tvg-name="年代剧专区" tvg-logo="https://epg.112114.xyz/logo/年代剧专区.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",年代剧专区
+https://isus.cc/php/huya.php?id=20969095
+#EXTINF:-1 group-title="纪录片直播" tvg-name="幻海航行" tvg-logo="https://epg.112114.xyz/logo/幻海航行.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",幻海航行
+http://222.186.39.21:35466/douyu/17105786
+#EXTINF:-1 group-title="纪录片直播" tvg-name="碎片记" tvg-logo="https://epg.112114.xyz/logo/碎片记.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",碎片记
+http://222.186.39.21:35466/douyu/9412981
+#EXTINF:-1 group-title="纪录片直播" tvg-name="宇宙视界" tvg-logo="https://epg.112114.xyz/logo/宇宙视界.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",宇宙视界
+http://222.186.39.21:35466/douyu/9498354
+#EXTINF:-1 group-title="纪录片直播" tvg-name="宇宙探索飞船" tvg-logo="https://epg.112114.xyz/logo/宇宙探索飞船.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",宇宙探索飞船
+http://222.186.39.21:35466/douyu/9456028
+#EXTINF:-1 group-title="纪录片直播" tvg-name="世界未解之谜" tvg-logo="https://epg.112114.xyz/logo/世界未解之谜.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",世界未解之谜
+http://222.186.39.21:35466/douyu/9369468
+#EXTINF:-1 group-title="纪录片直播" tvg-name="贝爷" tvg-logo="https://epg.112114.xyz/logo/贝爷.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",贝爷
+https://isus.cc/php/huya.php?id=20969143
+#EXTINF:-1 group-title="纪录片直播" tvg-name="生存记" tvg-logo="https://epg.112114.xyz/logo/生存记.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",生存记
+https://isus.cc/php/huya.php?id=20985861
+#EXTINF:-1 group-title="纪录片直播" tvg-name="航拍中国专场" tvg-logo="https://epg.112114.xyz/logo/航拍中国专场.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",航拍中国专场
+https://isus.cc/php/huya.php?id=22414123
+#EXTINF:-1 group-title="纪录片直播" tvg-name="中国通史" tvg-logo="https://epg.112114.xyz/logo/中国通史.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",中国通史
+https://isus.cc/php/huya.php?id=20985822
+#EXTINF:-1 group-title="纪录片直播" tvg-name="云游故宫1" tvg-logo="https://epg.112114.xyz/logo/云游故宫1.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",云游故宫1
+https://isus.cc/php/huya.php?id=19743457
+#EXTINF:-1 group-title="纪录片直播" tvg-name="云游故宫2" tvg-logo="https://epg.112114.xyz/logo/云游故宫2.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",云游故宫2
+https://isus.cc/php/huya.php?id=19743452
+#EXTINF:-1 group-title="音乐直播" tvg-name="周杰伦专场" tvg-logo="https://epg.112114.xyz/logo/周杰伦专场.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",周杰伦专场
+http://222.186.39.21:35466/douyu/7537296
+#EXTINF:-1 group-title="音乐直播" tvg-name="双笙专场" tvg-logo="https://epg.112114.xyz/logo/双笙专场.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",双笙专场
+http://222.186.39.21:35466/douyu/6476693
+#EXTINF:-1 group-title="音乐直播" tvg-name="室外专场" tvg-logo="https://epg.112114.xyz/logo/室外专场.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",室外专场
+http://222.186.39.21:35466/douyu/9627625
+#EXTINF:-1 group-title="音乐直播" tvg-name="翻唱专场" tvg-logo="https://epg.112114.xyz/logo/翻唱专场.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",翻唱专场
+http://222.186.39.21:35466/douyu/9572351
+#EXTINF:-1 group-title="音乐直播" tvg-name="动漫音乐专场" tvg-logo="https://epg.112114.xyz/logo/动漫音乐专场.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",动漫音乐专场
+http://222.186.39.21:35466/douyu/9409703
+#EXTINF:-1 group-title="音乐直播" tvg-name="阿七点歌台" tvg-logo="https://epg.112114.xyz/logo/阿七点歌台.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",阿七点歌台
+http://222.186.39.21:35466/douyu/3186217
+#EXTINF:-1 group-title="音乐直播" tvg-name="音悦喵点歌台" tvg-logo="https://epg.112114.xyz/logo/音悦喵点歌台.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",音悦喵点歌台
+http://222.186.39.21:35466/douyu/3870925
+#EXTINF:-1 group-title="音乐直播" tvg-name="音乐台长" tvg-logo="https://epg.112114.xyz/logo/音乐台长.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",音乐台长
+http://222.186.39.21:35466/douyu/9629943
+#EXTINF:-1 group-title="音乐直播" tvg-name="下饭音乐" tvg-logo="https://epg.112114.xyz/logo/下饭音乐.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",下饭音乐
+http://222.186.39.21:35466/douyu/8661966
+#EXTINF:-1 group-title="音乐直播" tvg-name="音乐Wu哥" tvg-logo="https://epg.112114.xyz/logo/音乐Wu哥.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",音乐Wu哥
+http://222.186.39.21:35466/douyu/8667755
+#EXTINF:-1 group-title="音乐直播" tvg-name="音乐快斗" tvg-logo="https://epg.112114.xyz/logo/音乐快斗.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",音乐快斗
+http://222.186.39.21:35466/douyu/8324627
+#EXTINF:-1 group-title="音乐直播" tvg-name="蚕豆电台" tvg-logo="https://epg.112114.xyz/logo/蚕豆电台.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",蚕豆电台
+http://222.186.39.21:35466/douyu/8768792
+#EXTINF:-1 group-title="音乐直播" tvg-name="音乐猛抬头" tvg-logo="https://epg.112114.xyz/logo/音乐猛抬头.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",音乐猛抬头
+http://222.186.39.21:35466/douyu/8666105
+#EXTINF:-1 group-title="音乐直播" tvg-name="喵喵音乐台" tvg-logo="https://epg.112114.xyz/logo/喵喵音乐台.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",喵喵音乐台
+http://222.186.39.21:35466/douyu/9568091
+#EXTINF:-1 group-title="音乐直播" tvg-name="黑糖音乐秀" tvg-logo="https://epg.112114.xyz/logo/黑糖音乐秀.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",黑糖音乐秀
+http://222.186.39.21:35466/douyu/9560563
+#EXTINF:-1 group-title="音乐直播" tvg-name="荒草音乐" tvg-logo="https://epg.112114.xyz/logo/荒草音乐.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",荒草音乐
+http://222.186.39.21:35466/douyu/8706465
+#EXTINF:-1 group-title="音乐直播" tvg-name="热星音乐菌" tvg-logo="https://epg.112114.xyz/logo/热星音乐菌.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",热星音乐菌
+http://222.186.39.21:35466/douyu/8405922
+#EXTINF:-1 group-title="音乐直播" tvg-name="音乐Fans小琼" tvg-logo="https://epg.112114.xyz/logo/音乐Fans小琼.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",音乐Fans小琼
+http://222.186.39.21:35466/douyu/8666210
+#EXTINF:-1 group-title="音乐直播" tvg-name="小飞飞流行DJ音乐" tvg-logo="https://epg.112114.xyz/logo/小飞飞流行DJ音乐.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",小飞飞流行DJ音乐
+http://222.186.39.21:35466/douyu/10469362
+#EXTINF:-1 group-title="音乐直播" tvg-name="小舞点歌台" tvg-logo="https://epg.112114.xyz/logo/小舞点歌台.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",小舞点歌台
+https://isus.cc/php/huya.php?id=15590571
+#EXTINF:-1 group-title="音乐直播" tvg-name="24小时点歌台" tvg-logo="https://epg.112114.xyz/logo/24小时点歌台.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",24小时点歌台
+https://isus.cc/php/huya.php?id=25261191
+#EXTINF:-1 group-title="音乐直播" tvg-name="助眠音乐专场" tvg-logo="https://epg.112114.xyz/logo/助眠音乐专场.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",助眠音乐专场
+https://isus.cc/php/huya.php?id=21241811
+#EXTINF:-1 group-title="音乐直播" tvg-name="音乐小石榴" tvg-logo="https://epg.112114.xyz/logo/音乐小石榴.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",音乐小石榴
+https://isus.cc/php/huya.php?id=17091681
+#EXTINF:-1 group-title="音乐直播" tvg-name="DJ专场" tvg-logo="https://epg.112114.xyz/logo/DJ专场.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",DJ专场
+https://isus.cc/php/huya.php?id=20432228
+#EXTINF:-1 group-title="音乐直播" tvg-name="吉他专场" tvg-logo="https://epg.112114.xyz/logo/吉他专场.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",吉他专场
+https://isus.cc/php/huya.php?id=21241765
+#EXTINF:-1 group-title="音乐直播" tvg-name="24×7音乐" tvg-logo="https://epg.112114.xyz/logo/24×7音乐.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",24×7音乐
+https://isus.cc/php/huya.php?id=30483433
+#EXTINF:-1 group-title="音乐直播" tvg-name="轻音乐专场" tvg-logo="https://epg.112114.xyz/logo/轻音乐专场.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",轻音乐专场
+https://isus.cc/php/huya.php?id=26947138
+#EXTINF:-1 group-title="音乐直播" tvg-name="日语专场" tvg-logo="https://epg.112114.xyz/logo/日语专场.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",日语专场
+https://isus.cc/php/huya.php?id=21241795
+#EXTINF:-1 group-title="音乐直播" tvg-name="海选专场" tvg-logo="https://epg.112114.xyz/logo/海选专场.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",海选专场
+https://isus.cc/php/huya.php?id=21241781
+#EXTINF:-1 group-title="咪视界直播" tvg-name="咪视界4K" tvg-logo="https://epg.112114.xyz/logo/咪视界4K.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",咪视界4K
+http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000010000005180
+#EXTINF:-1 group-title="咪视界直播" tvg-name="至臻视界4K" tvg-logo="https://epg.112114.xyz/logo/至臻视界4K.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",至臻视界4K
+http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000010000015686
+#EXTINF:-1 group-title="咪视界直播" tvg-name="晴彩青少" tvg-logo="https://epg.112114.xyz/logo/晴彩青少.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",晴彩青少
+http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000020000011525
+#EXTINF:-1 group-title="咪视界直播" tvg-name="晴彩竞技" tvg-logo="https://epg.112114.xyz/logo/晴彩竞技.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",晴彩竞技
+http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000020000011528
+#EXTINF:-1 group-title="咪视界直播" tvg-name="晴彩篮球" tvg-logo="https://epg.112114.xyz/logo/晴彩篮球.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",晴彩篮球
+http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000020000011529
+#EXTINF:-1 group-title="咪视界直播" tvg-name="晴彩广场舞" tvg-logo="https://epg.112114.xyz/logo/晴彩广场舞.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",晴彩广场舞
+http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000020000011523
+#EXTINF:-1 group-title="咪视界直播" tvg-name="咪视界" tvg-logo="https://epg.112114.xyz/logo/咪视界.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",咪视界
+http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000020000011522
+#EXTINF:-1 group-title="咪视界直播" tvg-name="咪视通-1" tvg-logo="https://epg.112114.xyz/logo/咪视通-1.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",咪视通-1
+http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000001000005969
+#EXTINF:-1 group-title="咪视界直播" tvg-name="咪视界-2" tvg-logo="https://epg.112114.xyz/logo/咪视界-2.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",咪视界-2
+http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000001000005308
+#EXTINF:-1 group-title="咪视界直播" tvg-name="咪视通-3" tvg-logo="https://epg.112114.xyz/logo/咪视通-3.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",咪视通-3
+http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000001000007218
+#EXTINF:-1 group-title="咪视界直播" tvg-name="咪视通-4" tvg-logo="https://epg.112114.xyz/logo/咪视通-4.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",咪视通-4
+http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000001000008001
+#EXTINF:-1 group-title="咪视界直播" tvg-name="咪视通-5" tvg-logo="https://epg.112114.xyz/logo/咪视通-5.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",咪视通-5
+http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000001000008176
+#EXTINF:-1 group-title="咪视界直播" tvg-name="咪视通-6" tvg-logo="https://epg.112114.xyz/logo/咪视通-6.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",咪视通-6
+http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000001000008379
+#EXTINF:-1 group-title="咪视界直播" tvg-name="咪视通-7" tvg-logo="https://epg.112114.xyz/logo/咪视通-7.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",咪视通-7
+http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000001000010129
+#EXTINF:-1 group-title="咪视界直播" tvg-name="咪视通-8" tvg-logo="https://epg.112114.xyz/logo/咪视通-8.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",咪视通-8
+http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000001000010948
+#EXTINF:-1 group-title="咪视界直播" tvg-name="咪视通-9" tvg-logo="https://epg.112114.xyz/logo/咪视通-9.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",咪视通-9
+http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000001000028638
+#EXTINF:-1 group-title="咪视界直播" tvg-name="咪视通-10" tvg-logo="https://epg.112114.xyz/logo/咪视通-10.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",咪视通-10
+http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000001000031494
+#EXTINF:-1 group-title="咪视界直播" tvg-name="咪视通-11" tvg-logo="https://epg.112114.xyz/logo/咪视通-11.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",咪视通-11
+http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000010000005837
+#EXTINF:-1 group-title="咪视界直播" tvg-name="咪视通-12" tvg-logo="https://epg.112114.xyz/logo/咪视通-12.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",咪视通-12
+http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000020000011518
+#EXTINF:-1 group-title="咪视界直播" tvg-name="咪视通-13" tvg-logo="https://epg.112114.xyz/logo/咪视通-13.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",咪视通-13
+http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000020000011519
+#EXTINF:-1 group-title="咪视界直播" tvg-name="咪视通-14" tvg-logo="https://epg.112114.xyz/logo/咪视通-14.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",咪视通-14
+http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000020000011520
+#EXTINF:-1 group-title="咪视界直播" tvg-name="咪视通-15" tvg-logo="https://epg.112114.xyz/logo/咪视通-15.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",咪视通-15
+http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000020000011521
+#EXTINF:-1 group-title="咪视界直播" tvg-name="咪视通-16" tvg-logo="https://epg.112114.xyz/logo/咪视通-16.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",咪视通-16
+http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000020000011522
+#EXTINF:-1 group-title="咪视界直播" tvg-name="咪视通-17" tvg-logo="https://epg.112114.xyz/logo/咪视通-17.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",咪视通-17
+http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000020000011523
+#EXTINF:-1 group-title="咪视界直播" tvg-name="咪视通-18" tvg-logo="https://epg.112114.xyz/logo/咪视通-18.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",咪视通-18
+http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000020000011524
+#EXTINF:-1 group-title="咪视界直播" tvg-name="咪视通-19" tvg-logo="https://epg.112114.xyz/logo/咪视通-19.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",咪视通-19
+http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000020000011525
+#EXTINF:-1 group-title="咪视界直播" tvg-name="咪视通-20" tvg-logo="https://epg.112114.xyz/logo/咪视通-20.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",咪视通-20
+http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000020000011528
+#EXTINF:-1 group-title="咪视界直播" tvg-name="咪视通-21" tvg-logo="https://epg.112114.xyz/logo/咪视通-21.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",咪视通-21
+http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000020000011529
+#EXTINF:-1 group-title="咪视界直播" tvg-name="咪视通-22" tvg-logo="https://epg.112114.xyz/logo/咪视通-22.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",咪视通-22
+http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000020000011530
+#EXTINF:-1 group-title="咪视界直播" tvg-name="咪视通-23" tvg-logo="https://epg.112114.xyz/logo/咪视通-23.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",咪视通-23
+http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000020000011531
+#EXTINF:-1 group-title="咪视界直播" tvg-name="咪视通-24" tvg-logo="https://epg.112114.xyz/logo/咪视通-24.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",咪视通-24
+http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000010000000097
+#EXTINF:-1 group-title="咪视界直播" tvg-name="咪视通-25" tvg-logo="https://epg.112114.xyz/logo/咪视通-25.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",咪视通-25
+http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000010000002019
+#EXTINF:-1 group-title="咪视界直播" tvg-name="咪视通-26" tvg-logo="https://epg.112114.xyz/logo/咪视通-26.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",咪视通-26
+http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000010000002809
+#EXTINF:-1 group-title="咪视界直播" tvg-name="咪视通-27" tvg-logo="https://epg.112114.xyz/logo/咪视通-27.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",咪视通-27
+http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000010000003915
+#EXTINF:-1 group-title="咪视界直播" tvg-name="咪视通-28" tvg-logo="https://epg.112114.xyz/logo/咪视通-28.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",咪视通-28
+http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000010000004193
+#EXTINF:-1 group-title="咪视界直播" tvg-name="咪视通-29" tvg-logo="https://epg.112114.xyz/logo/咪视通-29.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",咪视通-29
+http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000010000006077
+#EXTINF:-1 group-title="咪视界直播" tvg-name="咪视通-30" tvg-logo="https://epg.112114.xyz/logo/咪视通-30.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",咪视通-30
+http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000010000006658
+#EXTINF:-1 group-title="咪视界直播" tvg-name="咪视通-31" tvg-logo="https://epg.112114.xyz/logo/咪视通-31.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",咪视通-31
+http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000010000009788
+#EXTINF:-1 group-title="咪视界直播" tvg-name="咪视通-32" tvg-logo="https://epg.112114.xyz/logo/咪视通-32.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",咪视通-32
+http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000010000010833
+#EXTINF:-1 group-title="咪视界直播" tvg-name="咪视通-33" tvg-logo="https://epg.112114.xyz/logo/咪视通-33.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",咪视通-33
+http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000010000011297
+#EXTINF:-1 group-title="咪视界直播" tvg-name="咪视通-34" tvg-logo="https://epg.112114.xyz/logo/咪视通-34.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",咪视通-34
+http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000010000011518
+#EXTINF:-1 group-title="咪视界直播" tvg-name="咪视通-35" tvg-logo="https://epg.112114.xyz/logo/咪视通-35.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",咪视通-35
+http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000010000012558
+#EXTINF:-1 group-title="咪视界直播" tvg-name="咪视通-36" tvg-logo="https://epg.112114.xyz/logo/咪视通-36.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",咪视通-36
+http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000010000012616
+#EXTINF:-1 group-title="咪视界直播" tvg-name="咪视通-37" tvg-logo="https://epg.112114.xyz/logo/咪视通-37.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",咪视通-37
+http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000010000015470
+#EXTINF:-1 group-title="咪视界直播" tvg-name="咪视通-38" tvg-logo="https://epg.112114.xyz/logo/咪视通-38.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",咪视通-38
+http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000010000015560
+#EXTINF:-1 group-title="咪视界直播" tvg-name="咪视通-39" tvg-logo="https://epg.112114.xyz/logo/咪视通-39.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",咪视通-39
+http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000010000017678
+#EXTINF:-1 group-title="咪视界直播" tvg-name="咪视通-40" tvg-logo="https://epg.112114.xyz/logo/咪视通-40.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",咪视通-40
+http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000010000019839
+#EXTINF:-1 group-title="咪视界直播" tvg-name="咪视通-41" tvg-logo="https://epg.112114.xyz/logo/咪视通-41.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",咪视通-41
+http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000010000021904
+#EXTINF:-1 group-title="咪视界直播" tvg-name="咪视通-42" tvg-logo="https://epg.112114.xyz/logo/咪视通-42.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",咪视通-42
+http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000010000023434
+#EXTINF:-1 group-title="咪视界直播" tvg-name="咪视通-43" tvg-logo="https://epg.112114.xyz/logo/咪视通-43.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",咪视通-43
+http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000010000025380
+#EXTINF:-1 group-title="咪视界直播" tvg-name="咪视通-44" tvg-logo="https://epg.112114.xyz/logo/咪视通-44.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",咪视通-44
+http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000010000027691
+#EXTINF:-1 group-title="咪视界直播" tvg-name="咪视通-45" tvg-logo="https://epg.112114.xyz/logo/咪视通-45.png" epg-url="https://gitee.com/gsls200808/xmltvepg/raw/master/e9.xml.gz",咪视通-45
+http://anfeind1.kmdns.net:19999/migunohosts.php?channel-id=FifastbLive&Contentid=3000000010000031669
