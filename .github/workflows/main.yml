@@ -1,0 +1,54 @@
+name: 获取M3U播放列表
+
+on:
+  schedule:
+    # 每天凌晨2点运行一次
+    - cron: '0 */5 * * *'
+  workflow_dispatch:  # 允许手动触发
+
+permissions:
+  contents: write  # 赋予写入权限
+
+jobs:
+  fetch-m3u:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 检出代码
+      uses: actions/checkout@v3
+      
+    - name: 获取M3U内容
+      run: |
+        # 请将下面的URL替换为你的M3U链接
+        M3U_URL="你的M3U链接地址"
+        
+        # 下载M3U内容
+        curl -L -o kulaoTV.txt "$M3U_URL"
+        
+        # 添加时间戳信息
+        echo "" >> kulaoTV.txt
+        echo "# 更新时间: $(date '+%Y-%m-%d %H:%M:%S UTC')" >> kulaoTV.txt
+        
+    - name: 检查文件是否有变化
+      id: check_changes
+      run: |
+        if git diff --quiet kulaoTV.txt; then
+          echo "changed=false" >> $GITHUB_OUTPUT
+        else
+          echo "changed=true" >> $GITHUB_OUTPUT
+        fi
+        
+    - name: 强制推送更新
+      if: steps.check_changes.outputs.changed == 'true'
+      run: |
+        git config user.name "github-actions"
+        git config user.email "github-actions@github.com"
+        
+        # 强制添加文件
+        git add -f kulaoTV.txt
+        
+        # 提交更改
+        git commit -m "更新播放列表 - $(date '+%Y-%m-%d %H:%M:%S')"
+        
+        # 强制推送
+        git push origin HEAD --force
