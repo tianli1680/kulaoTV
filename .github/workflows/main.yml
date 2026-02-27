@@ -1,141 +1,99 @@
-name: 获取M3U播放列表
+name: 提取并处理M3U频道
 
 on:
   schedule:
-    # 每天凌晨2点运行一次
-    - cron: '0 */5 * * *'
-  workflow_dispatch:  # 允许手动触发
-
-permissions:
-  contents: write  # 赋予写入权限
+    # 每天凌晨3点运行
+    - cron: '0 3 * * *'
+  workflow_dispatch: # 允许手动触发
 
 jobs:
-  fetch-m3u:
+  extract-channels:
     runs-on: ubuntu-latest
-    
+    permissions:
+      contents: write
+      
     steps:
     - name: 检出代码
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       
-    - name: 获取M3U内容
+    - name: 下载M3U文件
       run: |
-        # 请将下面的URL替换为你的M3U链接
-        M3U_URL="https://raw.githubusercontent.com/Jsnzkpg/Jsnzkpg/Jsnzkpg/Jsnzkpg1.m3u"
-        
-        # 下载M3U内容
         echo "正在下载M3U文件..."
-        curl -L -o raw_playlist.txt "$M3U_URL"
+        curl -L -o source.m3u "https://raw.githubusercontent.com/Jsnzkpg/Jsnzkpg/Jsnzkpg/Jsnzkpg1.m3u"
         
-        # 添加时间戳信息到原始文件
-        echo "" >> raw_playlist.txt
-        echo "# 原始文件更新时间: $(date '+%Y-%m-%d %H:%M:%S UTC')" >> raw_playlist.txt
-        
-    - name: 过滤内容
+    - name: 提取并处理频道
       run: |
-        echo "开始过滤内容..."
-        echo "# 过滤后的M3U播放列表" > kulaoTV.txt
-        echo "# 创建时间: $(date '+%Y-%m-%d %H:%M:%S UTC')" >> kulaoTV.txt
-        echo "# 过滤规则: 移除包含 'TG频道', '央卫', '地方', '监控', '三网' 的内容" >> kulaoTV.txt
-        echo "" >> kulaoTV.txt
-        
-        # 读取原始文件并过滤
-        skip_next=false
-        
-        while IFS= read -r line; do
-          # 检查是否是注释行（以#开头）
-          if [[ $line == \#* ]]; then
-            # 保留所有注释行（除了过滤词相关的）
-            if ! echo "$line" | grep -qiE "TG频道|央卫|地方|监控|三网"; then
-              echo "$line" >> kulaoTV.txt
-            fi
-            skip_next=false
-          else
-            # 如果是URL行（不是注释行）
-            if [ "$skip_next" = false ]; then
-              # 检查上一行（通常包含频道信息）是否包含过滤词
-              # 这里我们需要回溯检查上一行的内容，但因为是逐行读取，所以需要使用不同的方法
-              echo "$line" >> kulaoTV.txt
-            else
-              skip_next=false
-            fi
-          fi
-        done < raw_playlist.txt
-        
-        echo "过滤完成"
-        
-    - name: 更精确的过滤（方法二）
-      run: |
-        echo "进行二次过滤..."
+        echo "正在提取指定分类频道..."
         
         # 创建临时文件
-        temp_file="temp_filtered.txt"
+        touch temp.m3u
         
-        # 使用awk进行更精确的过滤
-        awk '
-        BEGIN { skip = 0 }
-        {
-          # 检查当前行是否包含过滤词
-          if ($0 ~ /TG频道|央卫|地方|监控|三网/) {
-            skip = 1
-            next
-          }
-          
-          # 如果上一行被标记为跳过，这一行也跳过（通常是URL行）
-          if (skip == 1) {
-            skip = 0
-            next
-          }
-          
-          # 打印符合条件的行
-          print $0
-        }
-        ' kulaoTV.txt > "$temp_file"
+        # 定义需要保留的group-title模式
+        PATTERNS=(
+          'group-title="🎞️电影直播"'
+          'group-title="📺电视剧直播"'
+          'group-title="💽纪录片直播"'
+          'group-title="🎧音乐直播"'
+          'group-title="🏀[联通]咪视界直播"'
+        )
         
-        # 用过滤后的内容替换原文件
-        mv "$temp_file" kulaoTV.txt
+        # 读取文件并处理
+        current_line=""
+        while IFS= read -r line; do
+          # 如果是EXTINF行（频道信息行）
+          if [[ $line == \#EXTINF:* ]]; then
+            current_line="$line"
+          # 如果是URL行（紧接着EXTINF行的下一行）
+          elif [[ ! -z "$current_line" ]]; then
+            # 检查当前缓存的EXTINF行是否包含任一目标group-title
+            for pattern in "${PATTERNS[@]}"; do
+              if [[ "$current_line" == *"$pattern"* ]]; then
+                # 进行标题替换
+                modified_line="$current_line"
+                modified_line="${modified_line//group-title=\"🎞️电影直播\"/group-title=\"电影直播\"}"
+                modified_line="${modified_line//group-title=\"📺电视剧直播\"/group-title=\"电视剧直播\"}"
+                modified_line="${modified_line//group-title=\"💽纪录片直播\"/group-title=\"纪录片直播\"}"
+                modified_line="${modified_line//group-title=\"🎧音乐直播\"/group-title=\"音乐直播\"}"
+                modified_line="${modified_line//group-title=\"🏀[联通]咪视界直播\"/group-title=\"咪视界直播\"}"
+                
+                # 写入处理后的行和URL
+                echo "$modified_line" >> temp.m3u
+                echo "$line" >> temp.m3u
+                break
+              fi
+            done
+            current_line=""
+          else
+            # 忽略其他行（如EXTM3U头）
+            :
+          fi
+        done < source.m3u
         
-        # 显示过滤统计
-        original_lines=$(wc -l < raw_playlist.txt)
-        filtered_lines=$(wc -l < kulaoTV.txt)
-        removed_lines=$((original_lines - filtered_lines))
+        # 添加文件头
+        echo "#EXTM3U" > kulaoTV.m3u
+        cat temp.m3u >> kulaoTV.m3u
+        rm temp.m3u
         
-        echo "原始行数: $original_lines"
-        echo "过滤后行数: $filtered_lines"
-        echo "移除行数: $removed_lines"
+        echo "处理完成！共提取 $(grep -c "^#EXTINF" kulaoTV.m3u) 个频道"
         
-        # 显示过滤后的内容预览
-        echo "过滤后内容预览（前20行）："
-        head -n 20 kulaoTV.txt
-        
-    - name: 检查文件是否有变化
+    - name: 检查是否有变化
       id: check_changes
       run: |
-        if [ -f "kulaoTV.txt" ]; then
-          if git diff --quiet kulaoTV.txt; then
+        if [ -f kulaoTV.m3u ]; then
+          if git diff --quiet kulaoTV.m3u; then
             echo "changed=false" >> $GITHUB_OUTPUT
-            echo "文件无变化"
           else
             echo "changed=true" >> $GITHUB_OUTPUT
-            echo "文件有变化"
           fi
         else
           echo "changed=true" >> $GITHUB_OUTPUT
-          echo "文件不存在，将创建新文件"
         fi
         
-    - name: 强制推送更新
+    - name: 提交更改
       if: steps.check_changes.outputs.changed == 'true'
       run: |
-        git config user.name "github-actions"
-        git config user.email "github-actions@github.com"
-        
-        # 强制添加文件
-        git add -f kulaoTV.txt
-        
-        # 提交更改
-        git commit -m "更新过滤后的播放列表 - $(date '+%Y-%m-%d %H:%M:%S')"
-        
-        # 强制推送
-        git push origin HEAD --force
-        
-        echo "✅ 已强制推送更新"
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add kulaoTV.m3u
+        git commit -m "更新kulaoTV.m3u文件 - $(date +'%Y-%m-%d')"
+        git push
