@@ -2,12 +2,11 @@ name: 获取M3U播放列表
 
 on:
   schedule:
-    # 每天凌晨2点运行一次
     - cron: '0 */5 * * *'
-  workflow_dispatch:  # 允许手动触发
+  workflow_dispatch:
 
 permissions:
-  contents: write  # 赋予写入权限
+  contents: write
 
 jobs:
   fetch-m3u:
@@ -22,33 +21,57 @@ jobs:
         # 请将下面的URL替换为你的M3U链接
         M3U_URL="https://raw.githubusercontent.com/Jsnzkpg/Jsnzkpg/Jsnzkpg/Jsnzkpg1.m3u"
         
-        # 下载M3U内容
-        curl -L -o kulaoTV.txt "$M3U_URL"
+        echo "正在下载M3U内容..."
         
-        # 添加时间戳信息
-        echo "" >> kulaoTV.txt
-        echo "# 更新时间: $(date '+%Y-%m-%d %H:%M:%S UTC')" >> kulaoTV.txt
-        
-    - name: 检查文件是否有变化
-      id: check_changes
-      run: |
-        if git diff --quiet kulaoTV.txt; then
-          echo "changed=false" >> $GITHUB_OUTPUT
+        # 使用curl下载并保存到当前目录
+        if curl -L -f -o kulaoTV.txt "$M3U_URL"; then
+          echo "✅ 文件下载成功"
+          echo "# 更新时间: $(date '+%Y-%m-%d %H:%M:%S UTC')" >> kulaoTV.txt
+          echo "文件内容预览（前10行）："
+          head -n 10 kulaoTV.txt
         else
-          echo "changed=true" >> $GITHUB_OUTPUT
+          echo "❌ 文件下载失败"
+          exit 1
         fi
         
-    - name: 强制推送更新
-      if: steps.check_changes.outputs.changed == 'true'
+    - name: 验证文件
       run: |
+        if [ -f "kulaoTV.txt" ]; then
+          echo "✅ 文件已创建"
+          echo "文件大小: $(wc -c < kulaoTV.txt) 字节"
+          echo "文件位置: $(pwd)/kulaoTV.txt"
+        else
+          echo "❌ 文件未创建"
+          exit 1
+        fi
+        
+    - name: 提交和推送文件
+      run: |
+        # 配置Git
         git config user.name "github-actions"
         git config user.email "github-actions@github.com"
         
-        # 强制添加文件
-        git add -f kulaoTV.txt
+        # 显示当前目录内容
+        echo "当前目录内容："
+        ls -la
         
-        # 提交更改
-        git commit -m "更新播放列表 - $(date '+%Y-%m-%d %H:%M:%S')"
-        
-        # 强制推送
-        git push origin HEAD --force
+        # 确保文件存在并添加到Git
+        if [ -f "kulaoTV.txt" ]; then
+          echo "正在添加文件到Git..."
+          git add kulaoTV.txt
+          
+          # 检查是否有更改
+          if git diff --cached --quiet; then
+            echo "文件没有变化，无需提交"
+          else
+            echo "文件有变化，正在提交..."
+            git commit -m "更新播放列表 - $(date '+%Y-%m-%d %H:%M:%S')"
+            
+            echo "正在推送更改..."
+            git push origin HEAD
+            echo "✅ 推送成功"
+          fi
+        else
+          echo "❌ kulaoTV.txt 文件不存在"
+          exit 1
+        fi
