@@ -25,8 +25,8 @@ jobs:
       run: |
         echo "正在提取指定分类频道..."
         
-        # 创建临时文件
-        touch temp.m3u
+        # 创建新的M3U文件，添加文件头
+        echo "#EXTM3U" > kulaoTV.m3u
         
         # 定义需要保留的group-title模式
         PATTERNS=(
@@ -39,54 +39,83 @@ jobs:
         
         # 读取文件并处理
         current_line=""
-        while IFS= read -r line; do
+        channel_count=0
+        
+        while IFS= read -r line || [ -n "$line" ]; do
+          # 跳过文件头行
+          if [[ $line == \#EXTM3U* ]]; then
+            continue
+          fi
+          
           # 如果是EXTINF行（频道信息行）
           if [[ $line == \#EXTINF:* ]]; then
             current_line="$line"
           # 如果是URL行（紧接着EXTINF行的下一行）
-          elif [[ ! -z "$current_line" ]]; then
+          elif [[ -n "$current_line" ]] && [[ ! "$line" =~ ^# ]]; then
             # 检查当前缓存的EXTINF行是否包含任一目标group-title
+            matched=false
             for pattern in "${PATTERNS[@]}"; do
               if [[ "$current_line" == *"$pattern"* ]]; then
-                # 进行标题替换
-                modified_line="$current_line"
-                modified_line="${modified_line//group-title=\"🎞️电影直播\"/group-title=\"电影直播\"}"
-                modified_line="${modified_line//group-title=\"📺电视剧直播\"/group-title=\"电视剧直播\"}"
-                modified_line="${modified_line//group-title=\"💽纪录片直播\"/group-title=\"纪录片直播\"}"
-                modified_line="${modified_line//group-title=\"🎧音乐直播\"/group-title=\"音乐直播\"}"
-                modified_line="${modified_line//group-title=\"🏀[联通]咪视界直播\"/group-title=\"咪视界直播\"}"
-                
-                # 写入处理后的行和URL
-                echo "$modified_line" >> temp.m3u
-                echo "$line" >> temp.m3u
+                matched=true
                 break
               fi
             done
+            
+            if [ "$matched" = true ]; then
+              # 进行标题替换
+              modified_line="$current_line"
+              modified_line="${modified_line//group-title=\"🎞️电影直播\"/group-title=\"电影直播\"}"
+              modified_line="${modified_line//group-title=\"📺电视剧直播\"/group-title=\"电视剧直播\"}"
+              modified_line="${modified_line//group-title=\"💽纪录片直播\"/group-title=\"纪录片直播\"}"
+              modified_line="${modified_line//group-title=\"🎧音乐直播\"/group-title=\"音乐直播\"}"
+              modified_line="${modified_line//group-title=\"🏀[联通]咪视界直播\"/group-title=\"咪视界直播\"}"
+              
+              # 写入处理后的行和URL
+              echo "$modified_line" >> kulaoTV.m3u
+              echo "$line" >> kulaoTV.m3u
+              ((channel_count++))
+            fi
             current_line=""
           else
-            # 忽略其他行（如EXTM3U头）
-            :
+            # 重置current_line（处理异常情况）
+            current_line=""
           fi
         done < source.m3u
         
-        # 添加文件头
-        echo "#EXTM3U" > kulaoTV.m3u
-        cat temp.m3u >> kulaoTV.m3u
-        rm temp.m3u
+        echo "处理完成！共提取 $channel_count 个频道"
         
-        echo "处理完成！共提取 $(grep -c "^#EXTINF" kulaoTV.m3u) 个频道"
+    - name: 显示文件内容（调试）
+      run: |
+        echo "生成的kulaoTV.m3u文件内容："
+        echo "----------------------------------------"
+        cat kulaoTV.m3u
+        echo "----------------------------------------"
+        echo "文件大小：$(wc -c < kulaoTV.m3u) 字节"
+        echo "频道数量：$(grep -c "^#EXTINF" kulaoTV.m3u)"
+        
+    - name: 检查文件是否为空
+      id: check_file
+      run: |
+        if [ ! -f kulaoTV.m3u ] || [ ! -s kulaoTV.m3u ]; then
+          echo "错误：kulaoTV.m3u 文件为空或不存在"
+          exit 1
+        fi
+        echo "文件检查通过"
         
     - name: 检查是否有变化
       id: check_changes
       run: |
-        if [ -f kulaoTV.m3u ]; then
+        if git ls-files --error-unmatch kulaoTV.m3u >/dev/null 2>&1; then
           if git diff --quiet kulaoTV.m3u; then
             echo "changed=false" >> $GITHUB_OUTPUT
+            echo "文件无变化"
           else
             echo "changed=true" >> $GITHUB_OUTPUT
+            echo "文件有变化"
           fi
         else
           echo "changed=true" >> $GITHUB_OUTPUT
+          echo "文件是新增的"
         fi
         
     - name: 提交更改
@@ -95,5 +124,11 @@ jobs:
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git add kulaoTV.m3u
-        git commit -m "更新kulaoTV.m3u文件 - $(date +'%Y-%m-%d')"
+        git commit -m "更新kulaoTV.m3u文件 - $(date +'%Y-%m-%d %H:%M:%S')"
         git push
+        echo "已提交更改到仓库"
+        
+    - name: 完成提示
+      run: |
+        echo "✅ 工作流执行完成！"
+        echo "文件已保存到仓库根目录：kulaoTV.m3u"
