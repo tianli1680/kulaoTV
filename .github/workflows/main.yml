@@ -5,6 +5,9 @@ on:
     - cron: '0 */6 * * *'
   workflow_dispatch:
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true  # 强制使用Node.js 24
+
 jobs:
   extract-channels:
     runs-on: ubuntu-latest
@@ -13,7 +16,7 @@ jobs:
       
     steps:
     - name: 检出代码
-      uses: actions/checkout@v4
+      uses: actions/checkout@v4.2.2  # 使用最新版本
       
     - name: 下载M3U文件
       run: |
