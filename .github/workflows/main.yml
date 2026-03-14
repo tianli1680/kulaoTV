@@ -2,7 +2,7 @@ name: 提取并处理M3U频道
 
 on:
   schedule:
-    - cron: '0 */3 * * *'
+    - cron: '0 */6 * * *'
   workflow_dispatch:
 
 jobs:
@@ -35,13 +35,21 @@ jobs:
         # 创建新的M3U文件
         echo "#EXTM3U" > kulaoTV.m3u
         
-        # 定义需要保留的group-title
+        # 定义需要保留的group-title（原有分类）
         group_patterns=(
           "🎞️电影直播"
           "📺电视剧直播"
           "💽纪录片直播"
           "🎧音乐直播"
           "🏀[联通]咪视界直播"
+        )
+        
+        # 定义新增的央卫视直播group-title
+        yangshi_patterns=(
+          "🔥[三网]央卫视直播"
+          "🔥[电信]央卫视直播"
+          "🔥[移动]央卫视直播"
+          "🔥[联通]央卫视直播"
         )
         
         # 定义需要保留的tvg-name
@@ -52,10 +60,12 @@ jobs:
         )
         
         # 使用awk处理文件
-        awk -v group_patterns="${group_patterns[*]}" -v tvg_patterns="${tvg_patterns[*]}" '
+        awk -v group_patterns="${group_patterns[*]}" -v yangshi_patterns="${yangshi_patterns[*]}" -v tvg_patterns="${tvg_patterns[*]}" '
         BEGIN {
-          # 分割group-title模式
+          # 分割原有group-title模式
           split(group_patterns, group_array, " ")
+          # 分割央卫视group-title模式
+          split(yangshi_patterns, yangshi_array, " ")
           # 分割tvg-name模式
           split(tvg_patterns, tvg_array, " ")
           channel_count = 0
@@ -66,7 +76,7 @@ jobs:
           current_line = $0
           matched = 0
           
-          # 检查是否匹配任何group-title模式
+          # 检查是否匹配任何原有group-title模式
           for (i in group_array) {
             if (index(current_line, "group-title=\"" group_array[i] "\"")) {
               matched = 1
@@ -74,7 +84,17 @@ jobs:
             }
           }
           
-          # 如果没匹配到group-title，检查是否匹配tvg-name模式
+          # 如果没匹配到原有group-title，检查是否匹配央卫视group-title模式
+          if (!matched) {
+            for (i in yangshi_array) {
+              if (index(current_line, "group-title=\"" yangshi_array[i] "\"")) {
+                matched = 1
+                break
+              }
+            }
+          }
+          
+          # 如果没匹配到任何group-title，检查是否匹配tvg-name模式
           if (!matched) {
             for (i in tvg_array) {
               if (index(current_line, "tvg-name=\"" tvg_array[i] "\"")) {
@@ -85,12 +105,18 @@ jobs:
           }
           
           if (matched) {
-            # 进行group-title替换
+            # 进行原有group-title替换
             gsub(/group-title="🎞️电影直播"/, "group-title=\"电影直播\"", current_line)
             gsub(/group-title="📺电视剧直播"/, "group-title=\"电视剧直播\"", current_line)
             gsub(/group-title="💽纪录片直播"/, "group-title=\"纪录片直播\"", current_line)
             gsub(/group-title="🎧音乐直播"/, "group-title=\"音乐直播\"", current_line)
             gsub(/group-title="🏀\[联通\]咪视界直播"/, "group-title=\"咪视界直播\"", current_line)
+            
+            # 进行央卫视group-title替换（移除🔥符号）
+            gsub(/group-title="🔥\[三网\]央卫视直播"/, "group-title=\"[三网]央卫视直播\"", current_line)
+            gsub(/group-title="🔥\[电信\]央卫视直播"/, "group-title=\"[电信]央卫视直播\"", current_line)
+            gsub(/group-title="🔥\[移动\]央卫视直播"/, "group-title=\"[移动]央卫视直播\"", current_line)
+            gsub(/group-title="🔥\[联通\]央卫视直播"/, "group-title=\"[联通]央卫视直播\"", current_line)
             
             # 保存处理后的行
             print current_line
@@ -119,6 +145,9 @@ jobs:
         echo ""
         echo "各分类频道数量："
         grep "group-title=" kulaoTV.m3u | grep -o 'group-title="[^"]*"' | sort | uniq -c
+        echo ""
+        echo "央卫视直播分类统计："
+        grep -E 'group-title="\[(三网|电信|移动|联通)\]央卫视直播"' kulaoTV.m3u | grep -o 'group-title="[^"]*"' | sort | uniq -c
         echo ""
         echo "凤凰系列频道："
         grep -E 'tvg-name="(凤凰中文|凤凰资讯|鳳凰中文)"' kulaoTV.m3u | sed 's/.*tvg-name="\([^"]*\)".*/\1/' | sort | uniq -c
