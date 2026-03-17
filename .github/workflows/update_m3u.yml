@@ -11,13 +11,14 @@ on:
   
   # 当推送更改到main分支时也触发（可选）
   push:
-分支: [ main ]
+分支: 
+      - main
     paths:
       - '.github/workflows/update-m3u.yml'
 
 # 设置权限
 permissions:
-  contents: write  # 允许写入内容
+  contents: write
 
 jobs:
   update-playlist:
