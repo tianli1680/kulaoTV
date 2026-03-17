@@ -1,13 +1,9 @@
 name: Update M3U Playlist
 
-# 触发条件
 on:
   schedule:
     - cron: '0 */6 * * *'
   workflow_dispatch:
-  push:
-分支:
-      - main
 
 permissions:
   contents: write
@@ -19,8 +15,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -47,7 +41,5 @@ jobs:
             exit 0
           fi
           
-          git commit -m "Update M3U playlist - $(TZ='Asia/Shanghai' date '+%Y-%m-%d %H:%M:%S')"
+          git commit -m "Update M3U playlist - $(date '+%Y-%m-%d %H:%M:%S')"
           git push
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
