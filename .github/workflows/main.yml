@@ -30,6 +30,10 @@ jobs:
         
         echo "文件下载成功，大小：$(wc -c < source.m3u) 字节"
         
+        # 显示源文件中的group-title分布
+        echo "源文件中的group-title分布："
+        grep "group-title=" source.m3u | grep -o 'group-title="[^"]*"' | sort | uniq -c | sort -rn | head -20
+        
     - name: 提取并处理频道
       run: |
         echo "正在提取指定分类频道..."
@@ -37,36 +41,35 @@ jobs:
         # 创建临时文件
         > temp_all.m3u
         
-        # 定义需要保留的group-title（原有分类）
-        group_patterns=(
-          "🎞️电影直播"
-          "📺电视剧直播"
-          "💽纪录片直播"
-          "🎧音乐直播"
-          "🏀[联通]咪视界直播"
+        # 定义需要保留的group-title（原始格式，包含emoji和🔥符号）
+        # 这样能确保正确匹配源文件中的内容
+        original_patterns=(
+          # 原有分类（包含emoji）
+          "group-title=\"🎞️电影直播\""
+          "group-title=\"📺电视剧直播\""
+          "group-title=\"💽纪录片直播\""
+          "group-title=\"🎧音乐直播\""
+          "group-title=\"🏀[联通]咪视界直播\""
+          
+          # 央卫视直播（包含🔥符号）
+          "group-title=\"🔥[三网]央卫视直播\""
+          "group-title=\"🔥[电信]央卫视直播\""
+          "group-title=\"🔥[移动]央卫视直播\""
+          "group-title=\"🔥[联通]央卫视直播\""
         )
         
-        # 定义新增的央卫视直播group-title
-        yangshi_patterns=(
-          "🔥[三网]央卫视直播"
-          "🔥[电信]央卫视直播"
-          "🔥[移动]央卫视直播"
-          "🔥[联通]央卫视直播"
-        )
-        
-        # 定义需要保留的tvg-name
+        # 定义tvg-name模式
         tvg_patterns=(
-          "凤凰中文"
-          "凤凰资讯"
-          "鳳凰中文"
+          "tvg-name=\"凤凰中文\""
+          "tvg-name=\"凤凰资讯\""
+          "tvg-name=\"鳳凰中文\""
         )
         
-        # 使用awk处理文件
-        awk -v group_patterns="${group_patterns[*]}" -v yangshi_patterns="${yangshi_patterns[*]}" -v tvg_patterns="${tvg_patterns[*]}" '
+        # 使用awk处理文件，直接匹配原始格式
+        awk -v patterns="${original_patterns[*]}" -v tvg_patterns="${tvg_patterns[*]}" '
         BEGIN {
-          split(group_patterns, group_array, " ")
-          split(yangshi_patterns, yangshi_array, " ")
-          split(tvg_patterns, tvg_array, " ")
+          split(patterns, pattern_array, "\" \"")
+          split(tvg_patterns, tvg_array, "\" \"")
           channel_count = 0
         }
         
@@ -74,25 +77,21 @@ jobs:
           current_line = $0
           matched = 0
           
-          for (i in group_array) {
-            if (index(current_line, "group-title=\"" group_array[i] "\"")) {
+          # 检查是否匹配任何group-title模式
+          for (i in pattern_array) {
+            # 移除引号进行匹配
+            gsub(/\"/, "", pattern_array[i])
+            if (index(current_line, pattern_array[i])) {
               matched = 1
               break
             }
           }
           
-          if (!matched) {
-            for (i in yangshi_array) {
-              if (index(current_line, "group-title=\"" yangshi_array[i] "\"")) {
-                matched = 1
-                break
-              }
-            }
-          }
-          
+          # 如果没匹配到group-title，检查是否匹配tvg-name模式
           if (!matched) {
             for (i in tvg_array) {
-              if (index(current_line, "tvg-name=\"" tvg_array[i] "\"")) {
+              gsub(/\"/, "", tvg_array[i])
+              if (index(current_line, tvg_array[i])) {
                 matched = 1
                 break
               }
@@ -100,17 +99,7 @@ jobs:
           }
           
           if (matched) {
-            gsub(/group-title="🎞️电影直播"/, "group-title=\"电影直播\"", current_line)
-            gsub(/group-title="📺电视剧直播"/, "group-title=\"电视剧直播\"", current_line)
-            gsub(/group-title="💽纪录片直播"/, "group-title=\"纪录片直播\"", current_line)
-            gsub(/group-title="🎧音乐直播"/, "group-title=\"音乐直播\"", current_line)
-            gsub(/group-title="🏀\[联通\]咪视界直播"/, "group-title=\"咪视界直播\"", current_line)
-            
-            gsub(/group-title="🔥\[三网\]央卫视直播"/, "group-title=\"[三网]央卫视直播\"", current_line)
-            gsub(/group-title="🔥\[电信\]央卫视直播"/, "group-title=\"[电信]央卫视直播\"", current_line)
-            gsub(/group-title="🔥\[移动\]央卫视直播"/, "group-title=\"[移动]央卫视直播\"", current_line)
-            gsub(/group-title="🔥\[联通\]央卫视直播"/, "group-title=\"[联通]央卫视直播\"", current_line)
-            
+            # 保存原始行（先不做替换，以便后续处理）
             print current_line
             getline url_line
             print url_line
@@ -126,14 +115,34 @@ jobs:
         echo "临时文件生成完成"
         echo "临时文件中的频道数量：$(grep -c "^#EXTINF" temp_all.m3u)"
         
-    - name: 按指定顺序排序频道
+        # 显示临时文件中的group-title分布
+        echo "临时文件中的group-title分布："
+        grep "group-title=" temp_all.m3u | grep -o 'group-title="[^"]*"' | sort | uniq -c | sort -rn
+        
+    - name: 处理并排序频道
       run: |
-        echo "正在按指定顺序排序频道..."
+        echo "正在处理并排序频道..."
         
         # 创建最终的M3U文件
         echo "#EXTM3U" > kulaoTV.m3u
         
-        # 定义排序顺序（按照要求的顺序）- 注意这里要使用处理后的group-title名称
+        # 定义需要处理的央卫视直播group-title（原始格式）
+        yangshi_original=(
+          "group-title=\"🔥[联通]央卫视直播\""
+          "group-title=\"🔥[电信]央卫视直播\""
+          "group-title=\"🔥[三网]央卫视直播\""
+          "group-title=\"🔥[移动]央卫视直播\""
+        )
+        
+        # 定义对应的新group-title（替换后的格式）
+        yangshi_new=(
+          "group-title=\"[联通]央卫视直播\""
+          "group-title=\"[电信]央卫视直播\""
+          "group-title=\"[三网]央卫视直播\""
+          "group-title=\"[移动]央卫视直播\""
+        )
+        
+        # 定义排序顺序（使用新名称）
         order=(
           "[联通]央卫视直播"
           "[电信]央卫视直播" 
@@ -141,105 +150,108 @@ jobs:
           "[移动]央卫视直播"
         )
         
-        # 方法1：使用awk直接按指定顺序提取
-        echo "方法1：使用awk按指定顺序提取央卫视直播..."
+        # 先处理央卫视直播，按顺序提取
+        echo "按顺序提取央卫视直播..."
         
-        # 为每个group创建单独的文件，然后按顺序合并
         for i in "${!order[@]}"; do
-          group="${order[$i]}"
-          echo "正在提取第 $((i+1)) 组: $group"
+          group_name="${order[$i]}"
+          original_pattern="${yangshi_original[$i]}"
+          new_pattern="${yangshi_new[$i]}"
           
-          # 提取匹配的频道（包括EXTINF行和下一行的URL）
-          awk -v group="$group" '
-          BEGIN { found=0 }
+          echo "正在处理: $group_name"
+          
+          # 提取匹配的频道，同时替换group-title
+          awk -v original="$original_pattern" -v new="$new_pattern" '
+          BEGIN { found = 0 }
           {
-            if ($0 ~ "group-title=\"" group "\"") {
-              print $0  # 打印EXTINF行
-              getline url_line  # 获取下一行
+            if ($0 ~ original) {
+              # 替换group-title
+              gsub(original, new, $0)
+              print $0
+              getline url_line
               print url_line
               found++
             }
           }
           END {
             if (found > 0) {
-              print "找到 " found " 个 " group " 频道" > "/dev/stderr"
+              print "找到 " found " 个 " new " 频道" > "/dev/stderr"
             }
-          }' temp_all.m3u >> "temp_group_$i.m3u"
+          }' temp_all.m3u >> kulaoTV.m3u
         done
         
-        # 按顺序合并所有group文件
-        echo "按顺序合并央卫视直播..."
-        for i in "${!order[@]}"; do
-          if [ -f "temp_group_$i.m3u" ] && [ -s "temp_group_$i.m3u" ]; then
-            cat "temp_group_$i.m3u" >> kulaoTV.m3u
-            rm "temp_group_$i.m3u"
-          fi
-        done
+        # 处理其他频道（包括原有分类和凤凰频道）
+        echo "正在处理其他频道..."
         
-        # 方法2：提取所有非央卫视直播的频道
-        echo "正在提取其他频道..."
+        # 定义其他需要替换的group-title
+        other_replacements=(
+          "group-title=\"🎞️电影直播\"|group-title=\"电影直播\""
+          "group-title=\"📺电视剧直播\"|group-title=\"电视剧直播\""
+          "group-title=\"💽纪录片直播\"|group-title=\"纪录片直播\""
+          "group-title=\"🎧音乐直播\"|group-title=\"音乐直播\""
+          "group-title=\"🏀[联通]咪视界直播\"|group-title=\"咪视界直播\""
+        )
         
-        # 创建一个awk脚本来提取不在任何央卫视分类中的频道
-        awk '
-        function isYangshi(line) {
-          return (line ~ /group-title="\[联通\]央卫视直播"/ || 
-                  line ~ /group-title="\[电信\]央卫视直播"/ || 
-                  line ~ /group-title="\[三网\]央卫视直播"/ || 
-                  line ~ /group-title="\[移动\]央卫视直播"/)
+        # 提取非央卫视直播的频道并替换group-title
+        awk -v reps="${other_replacements[*]}" '
+        BEGIN {
+          # 分割替换规则
+          split(reps, rep_array, " ")
+          # 构建排除模式（央卫视直播）
+          exclude_pattern = "group-title=\"🔥\\[联通\\]央卫视直播\"|group-title=\"🔥\\[电信\\]央卫视直播\"|group-title=\"🔥\\[三网\\]央卫视直播\"|group-title=\"🔥\\[移动\\]央卫视直播\""
         }
-        
-        BEGIN { skip_next = 0 }
         {
-          if (skip_next) {
-            skip_next = 0
-            next
-          }
-          
           if ($0 ~ /^#EXTINF:/) {
-            if (isYangshi($0)) {
+            current_line = $0
+            # 检查是否是央卫视直播
+            if (current_line ~ exclude_pattern) {
               # 如果是央卫视直播，跳过这一行和下一行
-              skip_next = 1
-            } else {
-              # 如果不是央卫视直播，打印这一行
-              print $0
               getline url_line
-              print url_line
+              next
             }
+            
+            # 进行其他group-title替换
+            for (j in rep_array) {
+              split(rep_array[j], rep, "|")
+              gsub(rep[1], rep[2], current_line)
+            }
+            
+            print current_line
+            getline url_line
+            print url_line
           }
         }' temp_all.m3u >> kulaoTV.m3u
         
         # 统计结果
         echo ""
-        echo "排序完成！最终文件统计："
+        echo="排序完成！最终文件统计："
         echo "----------------------------------------"
         
         total=$(grep -c "^#EXTINF" kulaoTV.m3u || echo 0)
         echo "总频道数: $total"
         
         echo ""
-        echo "按顺序验证央卫视直播："
+        echo "央卫视直播统计："
         for group in "${order[@]}"; do
           count=$(grep -c "group-title=\"$group\"" kulaoTV.m3u || echo 0)
           echo "  $group: $count"
-          
-          # 显示前几个频道的名称作为验证
-          if [ $count -gt 0 ]; then
-            echo "    示例频道:"
-            grep -B1 "group-title=\"$group\"" kulaoTV.m3u | grep "^#EXTINF" | head -3 | sed 's/.*,//' | sed 's/^/      /'
-          fi
         done
         
-    - name: 显示结果统计
+        echo ""
+        echo "其他分类统计："
+        grep "group-title=" kulaoTV.m3u | grep -v -E 'group-title="\[(联通|电信|三网|移动)\]央卫视直播"' | grep -o 'group-title="[^"]*"' | sort | uniq -c | sort -rn
+        
+    - name: 显示最终统计
       run: |
-        echo "📊 提取结果统计："
+        echo "📊 最终提取结果统计："
         echo "----------------------------------------"
         echo "文件：kulaoTV.m3u"
         echo "大小：$(wc -c < kulaoTV.m3u) 字节"
         echo "频道总数：$(grep -c "^#EXTINF" kulaoTV.m3u || echo 0)"
         echo ""
-        echo "按指定顺序的央卫视直播："
-        order=("[联通]央卫视直播" "[电信]央卫视直播" "[三网]央卫视直播" "[移动]央卫视直播")
         
+        echo "央卫视直播（按指定顺序）："
+        order=("[联通]央卫视直播" "[电信]央卫视直播" "[三网]央卫视直播" "[移动]央卫视直播")
         yangshi_total=0
         for group in "${order[@]}"; do
           count=$(grep -c "group-title=\"$group\"" kulaoTV.m3u || echo 0)
@@ -250,12 +262,16 @@ jobs:
         echo ""
         
         echo "其他分类："
-        grep "group-title=" kulaoTV.m3u 2>/dev/null | grep -v -E 'group-title="\[(联通|电信|三网|移动)\]央卫视直播"' | grep -o 'group-title="[^"]*"' | sort | uniq -c | sort -rn || echo "  无其他分类"
+        grep "group-title=" kulaoTV.m3u | grep -v -E 'group-title="\[(联通|电信|三网|移动)\]央卫视直播"' | grep -o 'group-title="[^"]*"' | sort | uniq -c | sort -rn || echo "  无其他分类"
         echo ""
         
         echo "凤凰系列频道："
         grep -E 'tvg-name="(凤凰中文|凤凰资讯|鳳凰中文)"' kulaoTV.m3u 2>/dev/null | sed 's/.*tvg-name="\([^"]*\)".*/\1/' | sort | uniq -c || echo "  无凤凰频道"
         echo "----------------------------------------"
+        
+        # 验证文件内容
+        echo "文件前20行预览："
+        head -n 20 kulaoTV.m3u
         
     - name: 检查文件有效性
       run: |
@@ -269,12 +285,14 @@ jobs:
           exit 1
         fi
         
-        # 验证排序顺序
-        echo "验证排序顺序..."
-        
-        # 获取文件中出现的所有央卫视直播group-title（按出现顺序）
-        echo "文件中央卫视直播出现顺序："
-        grep "group-title=" kulaoTV.m3u | grep -E 'group-title="\[(联通|电信|三网|移动)\]央卫视直播"' | head -10 | sed 's/.*group-title="\([^"]*\)".*/\1/' | uniq -c
+        # 检查央卫视直播
+        yangshi_count=$(grep -c -E 'group-title="\[(联通|电信|三网|移动)\]央卫视直播"' kulaoTV.m3u || echo 0)
+        if [ $yangshi_count -gt 0 ]; then
+          echo "✅ 找到 $yangshi_count 个央卫视直播频道"
+        else
+          echo "⚠️ 警告：文件中没有找到央卫视直播频道"
+          echo "请检查源文件是否包含这些频道"
+        fi
         
         echo "✅ 文件检查通过"
         
