@@ -1,0 +1,43 @@
+name: 更新并排序 M3U 播放列表
+
+on:
+  push:
+分支: [ main ]  # 当推送到 main 分支时触发
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:      # 允许手动触发
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 检出代码库
+        uses: actions/checkout@v4
+
+      - name: 设置 Python 环境
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: 下载并处理 M3U 文件
+        run: |
+          python process_m3u.py
+
+      - name: 检查文件是否有变化
+        id: check_changes
+        run: |
+          if git diff --quiet kulaoTV.m3u; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: 提交并推送更新（如有变化）
+        if: steps.check_changes.outputs.changed == 'true'
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add kulaoTV.m3u
+          git commit -m "自动更新 kulaoTV.m3u"
+          git push
