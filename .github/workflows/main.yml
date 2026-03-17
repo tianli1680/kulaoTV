@@ -29,6 +29,8 @@ jobs:
         fi
         
         echo "文件下载成功，大小：$(wc -c < source.m3u) 字节"
+        echo "文件前几行内容："
+        head -n 5 source.m3u
         
     - name: 提取并处理频道
       run: |
@@ -124,6 +126,7 @@ jobs:
         ' source.m3u > temp_all.m3u
         
         echo "临时文件生成完成"
+        echo "临时文件中的频道数量：$(grep -c "^#EXTINF" temp_all.m3u)"
         
     - name: 按指定顺序排序频道
       run: |
@@ -133,7 +136,6 @@ jobs:
         echo "#EXTM3U" > kulaoTV.m3u
         
         # 定义排序顺序（按照要求的顺序）
-        # 注意：这里使用处理后的group-title名称（已移除🔥符号）
         order=(
           "[联通]央卫视直播"
           "[电信]央卫视直播" 
@@ -141,19 +143,30 @@ jobs:
           "[移动]央卫视直播"
         )
         
+        # 检查临时文件是否存在且非空
+        if [ ! -s temp_all.m3u ]; then
+          echo "错误：临时文件为空或不存在"
+          exit 1
+        fi
+        
         # 先添加指定顺序的央卫视直播
         for group in "${order[@]}"; do
           echo "正在添加 $group 频道..."
-          # 提取匹配的频道（包括EXTINF行和URL行）
-          grep -A1 "group-title=\"$group\"" temp_all.m3u | grep -v "^--$" >> kulaoTV.m3u
+          # 使用grep -A1提取匹配行及其下一行，并忽略分隔线，|| true 防止grep没找到时报错
+          grep -A1 "group-title=\"$group\"" temp_all.m3u 2>/dev/null | grep -v "^--$" >> kulaoTV.m3u || true
+          # 统计添加的数量
+          count=$(grep -c "group-title=\"$group\"" kulaoTV.m3u 2>/dev/null || echo 0)
+          echo "  已添加 $count 个 $group 频道"
         done
         
         # 再添加其他所有频道（非央卫视直播）
         echo "正在添加其他频道..."
-        grep -v -E 'group-title="\[(联通|电信|三网|移动)\]央卫视直播"' temp_all.m3u | grep -v "^--$" >> kulaoTV.m3u
+        # 使用grep -v排除央卫视直播，|| true 防止grep没找到时报错
+        grep -v -E 'group-title="\[(联通|电信|三网|移动)\]央卫视直播"' temp_all.m3u 2>/dev/null >> kulaoTV.m3u || true
         
-        # 统计各分类数量
-        echo "排序完成！"
+        # 统计总数
+        total=$(grep -c "^#EXTINF" kulaoTV.m3u 2>/dev/null || echo 0)
+        echo "排序完成！最终文件共有 $total 个频道"
         
     - name: 显示结果统计
       run: |
@@ -161,42 +174,40 @@ jobs:
         echo "----------------------------------------"
         echo "文件：kulaoTV.m3u"
         echo "大小：$(wc -c < kulaoTV.m3u) 字节"
-        echo "频道总数：$(grep -c "^#EXTINF" kulaoTV.m3u)"
+        echo "频道总数：$(grep -c "^#EXTINF" kulaoTV.m3u || echo 0)"
         echo ""
         echo "各分类频道数量："
-        grep "group-title=" kulaoTV.m3u | grep -o 'group-title="[^"]*"' | sort | uniq -c
+        grep "group-title=" kulaoTV.m3u 2>/dev/null | grep -o 'group-title="[^"]*"' | sort | uniq -c || echo "  无分类信息"
         echo ""
         echo "央卫视直播分类统计（按指定顺序）："
-        echo "[联通]央卫视直播: $(grep -c "group-title=\"\[联通\]央卫视直播\"" kulaoTV.m3u)"
-        echo "[电信]央卫视直播: $(grep -c "group-title=\"\[电信\]央卫视直播\"" kulaoTV.m3u)"
-        echo "[三网]央卫视直播: $(grep -c "group-title=\"\[三网\]央卫视直播\"" kulaoTV.m3u)"
-        echo "[移动]央卫视直播: $(grep -c "group-title=\"\[移动\]央卫视直播\"" kulaoTV.m3u)"
+        for group in "[联通]央卫视直播" "[电信]央卫视直播" "[三网]央卫视直播" "[移动]央卫视直播"; do
+          count=$(grep -c "group-title=\"$group\"" kulaoTV.m3u 2>/dev/null || echo 0)
+          echo "$group: $count"
+        done
         echo ""
         echo "凤凰系列频道："
-        grep -E 'tvg-name="(凤凰中文|凤凰资讯|鳳凰中文)"' kulaoTV.m3u | sed 's/.*tvg-name="\([^"]*\)".*/\1/' | sort | uniq -c
+        grep -E 'tvg-name="(凤凰中文|凤凰资讯|鳳凰中文)"' kulaoTV.m3u 2>/dev/null | sed 's/.*tvg-name="\([^"]*\)".*/\1/' | sort | uniq -c || echo "  无凤凰频道"
         echo "----------------------------------------"
-        
-        # 验证排序结果
-        echo "验证排序顺序（前20行）："
-        head -n 20 kulaoTV.m3u
         
     - name: 检查文件有效性
       run: |
         if [ ! -s kulaoTV.m3u ]; then
           echo "❌ 错误：生成的kulaoTV.m3u文件为空"
+          echo "请检查源文件是否包含指定的频道"
           exit 1
         fi
         
-        if [ $(grep -c "^#EXTINF" kulaoTV.m3u) -eq 0 ]; then
+        if [ $(grep -c "^#EXTINF" kulaoTV.m3u 2>/dev/null || echo 0) -eq 0 ]; then
           echo "❌ 错误：文件中没有找到任何频道"
           exit 1
         fi
         
         echo "✅ 文件检查通过"
+        echo "文件包含 $(grep -c "^#EXTINF" kulaoTV.m3u) 个频道"
         
     - name: 提交更改
       run: |
-        if [ -f kulaoTV.m3u ]; then
+        if [ -f kulaoTV.m3u ] && [ -s kulaoTV.m3u ]; then
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           
@@ -210,19 +221,18 @@ jobs:
             echo "✅ 已提交更新到仓库"
           fi
         else
-          echo "❌ 错误：kulaoTV.m3u文件不存在"
-          exit 1
+          echo "⚠️ 警告：kulaoTV.m3u文件不存在或为空，跳过提交"
         fi
         
     - name: 提取凤凰频道到单独文件（可选）
       run: |
         echo "#EXTM3U" > fenghuang_channels.m3u
-        grep -B1 -E 'tvg-name="(凤凰中文|凤凰资讯|鳳凰中文)"' kulaoTV.m3u | grep -v "^--$" >> fenghuang_channels.m3u
+        grep -B1 -E 'tvg-name="(凤凰中文|凤凰资讯|鳳凰中文)"' kulaoTV.m3u 2>/dev/null | grep -v "^--$" >> fenghuang_channels.m3u || true
         
-        if [ -s fenghuang_channels.m3u ] && [ $(grep -c "^#EXTINF" fenghuang_channels.m3u) -gt 0 ]; then
+        if [ -s fenghuang_channels.m3u ] && [ $(grep -c "^#EXTINF" fenghuang_channels.m3u 2>/dev/null || echo 0) -gt 0 ]; then
           echo "✅ 已提取凤凰频道到 fenghuang_channels.m3u"
           echo "凤凰频道数量：$(grep -c "^#EXTINF" fenghuang_channels.m3u)"
-          git add fenghuang_channels.m3u
+          git add fenghuang_channels.m3u 2>/dev/null || true
         else
           echo "未找到凤凰系列频道"
           rm -f fenghuang_channels.m3u
