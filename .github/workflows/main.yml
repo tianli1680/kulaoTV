@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true  # 强制使用Node.js 24
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   extract-channels:
@@ -16,14 +16,13 @@ jobs:
       
     steps:
     - name: 检出代码
-      uses: actions/checkout@v4.2.2  # 使用最新版本
+      uses: actions/checkout@v4.2.2
       
     - name: 下载M3U文件
       run: |
         echo "正在下载M3U文件..."
         curl -L -o source.m3u "https://raw.githubusercontent.com/Jsnzkpg/Jsnzkpg/Jsnzkpg/Jsnzkpg1.m3u"
         
-        # 检查文件是否下载成功
         if [ ! -f source.m3u ]; then
           echo "错误：文件下载失败"
           exit 1
@@ -35,8 +34,8 @@ jobs:
       run: |
         echo "正在提取指定分类频道..."
         
-        # 创建新的M3U文件
-        echo "#EXTM3U" > kulaoTV.m3u
+        # 创建临时文件
+        > temp_all.m3u
         
         # 定义需要保留的group-title（原有分类）
         group_patterns=(
@@ -65,21 +64,16 @@ jobs:
         # 使用awk处理文件
         awk -v group_patterns="${group_patterns[*]}" -v yangshi_patterns="${yangshi_patterns[*]}" -v tvg_patterns="${tvg_patterns[*]}" '
         BEGIN {
-          # 分割原有group-title模式
           split(group_patterns, group_array, " ")
-          # 分割央卫视group-title模式
           split(yangshi_patterns, yangshi_array, " ")
-          # 分割tvg-name模式
           split(tvg_patterns, tvg_array, " ")
           channel_count = 0
         }
         
         /^#EXTINF:/ {
-          # 保存当前行
           current_line = $0
           matched = 0
           
-          # 检查是否匹配任何原有group-title模式
           for (i in group_array) {
             if (index(current_line, "group-title=\"" group_array[i] "\"")) {
               matched = 1
@@ -87,7 +81,6 @@ jobs:
             }
           }
           
-          # 如果没匹配到原有group-title，检查是否匹配央卫视group-title模式
           if (!matched) {
             for (i in yangshi_array) {
               if (index(current_line, "group-title=\"" yangshi_array[i] "\"")) {
@@ -97,7 +90,6 @@ jobs:
             }
           }
           
-          # 如果没匹配到任何group-title，检查是否匹配tvg-name模式
           if (!matched) {
             for (i in tvg_array) {
               if (index(current_line, "tvg-name=\"" tvg_array[i] "\"")) {
@@ -108,20 +100,17 @@ jobs:
           }
           
           if (matched) {
-            # 进行原有group-title替换
             gsub(/group-title="🎞️电影直播"/, "group-title=\"电影直播\"", current_line)
             gsub(/group-title="📺电视剧直播"/, "group-title=\"电视剧直播\"", current_line)
             gsub(/group-title="💽纪录片直播"/, "group-title=\"纪录片直播\"", current_line)
             gsub(/group-title="🎧音乐直播"/, "group-title=\"音乐直播\"", current_line)
             gsub(/group-title="🏀\[联通\]咪视界直播"/, "group-title=\"咪视界直播\"", current_line)
             
-            # 进行央卫视group-title替换（移除🔥符号）
             gsub(/group-title="🔥\[三网\]央卫视直播"/, "group-title=\"[三网]央卫视直播\"", current_line)
             gsub(/group-title="🔥\[电信\]央卫视直播"/, "group-title=\"[电信]央卫视直播\"", current_line)
             gsub(/group-title="🔥\[移动\]央卫视直播"/, "group-title=\"[移动]央卫视直播\"", current_line)
             gsub(/group-title="🔥\[联通\]央卫视直播"/, "group-title=\"[联通]央卫视直播\"", current_line)
             
-            # 保存处理后的行
             print current_line
             getline url_line
             print url_line
@@ -132,11 +121,39 @@ jobs:
         END {
           print "提取完成，共 " channel_count " 个频道" > "/dev/stderr"
         }
-        ' source.m3u >> kulaoTV.m3u
+        ' source.m3u > temp_all.m3u
         
-        # 检查结果
-        channel_count=$(grep -c "^#EXTINF" kulaoTV.m3u)
-        echo "处理完成！共提取 ${channel_count} 个频道"
+        echo "临时文件生成完成"
+        
+    - name: 按指定顺序排序频道
+      run: |
+        echo "正在按指定顺序排序频道..."
+        
+        # 创建最终的M3U文件
+        echo "#EXTM3U" > kulaoTV.m3u
+        
+        # 定义排序顺序（按照要求的顺序）
+        # 注意：这里使用处理后的group-title名称（已移除🔥符号）
+        order=(
+          "[联通]央卫视直播"
+          "[电信]央卫视直播" 
+          "[三网]央卫视直播"
+          "[移动]央卫视直播"
+        )
+        
+        # 先添加指定顺序的央卫视直播
+        for group in "${order[@]}"; do
+          echo "正在添加 $group 频道..."
+          # 提取匹配的频道（包括EXTINF行和URL行）
+          grep -A1 "group-title=\"$group\"" temp_all.m3u | grep -v "^--$" >> kulaoTV.m3u
+        done
+        
+        # 再添加其他所有频道（非央卫视直播）
+        echo "正在添加其他频道..."
+        grep -v -E 'group-title="\[(联通|电信|三网|移动)\]央卫视直播"' temp_all.m3u | grep -v "^--$" >> kulaoTV.m3u
+        
+        # 统计各分类数量
+        echo "排序完成！"
         
     - name: 显示结果统计
       run: |
@@ -149,12 +166,19 @@ jobs:
         echo "各分类频道数量："
         grep "group-title=" kulaoTV.m3u | grep -o 'group-title="[^"]*"' | sort | uniq -c
         echo ""
-        echo "央卫视直播分类统计："
-        grep -E 'group-title="\[(三网|电信|移动|联通)\]央卫视直播"' kulaoTV.m3u | grep -o 'group-title="[^"]*"' | sort | uniq -c
+        echo "央卫视直播分类统计（按指定顺序）："
+        echo "[联通]央卫视直播: $(grep -c "group-title=\"\[联通\]央卫视直播\"" kulaoTV.m3u)"
+        echo "[电信]央卫视直播: $(grep -c "group-title=\"\[电信\]央卫视直播\"" kulaoTV.m3u)"
+        echo "[三网]央卫视直播: $(grep -c "group-title=\"\[三网\]央卫视直播\"" kulaoTV.m3u)"
+        echo "[移动]央卫视直播: $(grep -c "group-title=\"\[移动\]央卫视直播\"" kulaoTV.m3u)"
         echo ""
         echo "凤凰系列频道："
         grep -E 'tvg-name="(凤凰中文|凤凰资讯|鳳凰中文)"' kulaoTV.m3u | sed 's/.*tvg-name="\([^"]*\)".*/\1/' | sort | uniq -c
         echo "----------------------------------------"
+        
+        # 验证排序结果
+        echo "验证排序顺序（前20行）："
+        head -n 20 kulaoTV.m3u
         
     - name: 检查文件有效性
       run: |
@@ -172,14 +196,12 @@ jobs:
         
     - name: 提交更改
       run: |
-        # 检查文件是否有变化
         if [ -f kulaoTV.m3u ]; then
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           
           git add kulaoTV.m3u
           
-          # 检查是否有改动需要提交
           if git diff --cached --quiet; then
             echo "文件无变化，无需提交"
           else
@@ -200,8 +222,6 @@ jobs:
         if [ -s fenghuang_channels.m3u ] && [ $(grep -c "^#EXTINF" fenghuang_channels.m3u) -gt 0 ]; then
           echo "✅ 已提取凤凰频道到 fenghuang_channels.m3u"
           echo "凤凰频道数量：$(grep -c "^#EXTINF" fenghuang_channels.m3u)"
-          
-          # 可选：也提交凤凰频道的单独文件
           git add fenghuang_channels.m3u
         else
           echo "未找到凤凰系列频道"
