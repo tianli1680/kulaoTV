@@ -133,7 +133,7 @@ jobs:
         # 创建最终的M3U文件
         echo "#EXTM3U" > kulaoTV.m3u
         
-        # 定义排序顺序（按照要求的顺序）
+        # 定义排序顺序（按照要求的顺序）- 注意这里要使用处理后的group-title名称
         order=(
           "[联通]央卫视直播"
           "[电信]央卫视直播" 
@@ -141,67 +141,92 @@ jobs:
           "[移动]央卫视直播"
         )
         
-        # 创建临时文件来存储已处理的频道ID，避免重复
-        > processed.txt
+        # 方法1：使用awk直接按指定顺序提取
+        echo "方法1：使用awk按指定顺序提取央卫视直播..."
         
-        # 先添加指定顺序的央卫视直播
-        for group in "${order[@]}"; do
-          echo "正在添加 $group 频道..."
+        # 为每个group创建单独的文件，然后按顺序合并
+        for i in "${!order[@]}"; do
+          group="${order[$i]}"
+          echo "正在提取第 $((i+1)) 组: $group"
           
-          # 使用awk提取匹配的频道，确保不重复
-          awk -v group="$group" -v processed="processed.txt" '
-          BEGIN {
-            # 读取已处理的行号
-            while ((getline line < processed) > 0) {
-              processed_lines[line] = 1
-            }
-            close(processed)
-          }
+          # 提取匹配的频道（包括EXTINF行和下一行的URL）
+          awk -v group="$group" '
+          BEGIN { found=0 }
           {
             if ($0 ~ "group-title=\"" group "\"") {
-              # 如果这一行是EXTINF行且未被处理过
-              if (!(NR in processed_lines)) {
-                print $0  # 打印EXTINF行
-                getline url_line  # 获取下一行（URL）
-                print url_line
-                # 记录这两行的行号
-                print NR > processed
-                print NR+1 > processed
-              }
+              print $0  # 打印EXTINF行
+              getline url_line  # 获取下一行
+              print url_line
+              found++
             }
-          }' temp_all.m3u >> kulaoTV.m3u
+          }
+          END {
+            if (found > 0) {
+              print "找到 " found " 个 " group " 频道" > "/dev/stderr"
+            }
+          }' temp_all.m3u >> "temp_group_$i.m3u"
         done
         
-        # 再添加其他所有频道（非央卫视直播和未被处理的）
-        echo "正在添加其他频道..."
+        # 按顺序合并所有group文件
+        echo "按顺序合并央卫视直播..."
+        for i in "${!order[@]}"; do
+          if [ -f "temp_group_$i.m3u" ] && [ -s "temp_group_$i.m3u" ]; then
+            cat "temp_group_$i.m3u" >> kulaoTV.m3u
+            rm "temp_group_$i.m3u"
+          fi
+        done
         
-        awk -v processed="processed.txt" '
-        BEGIN {
-          # 读取已处理的行号
-          while ((getline line < processed) > 0) {
-            processed_lines[line] = 1
-          }
-          close(processed)
+        # 方法2：提取所有非央卫视直播的频道
+        echo "正在提取其他频道..."
+        
+        # 创建一个awk脚本来提取不在任何央卫视分类中的频道
+        awk '
+        function isYangshi(line) {
+          return (line ~ /group-title="\[联通\]央卫视直播"/ || 
+                  line ~ /group-title="\[电信\]央卫视直播"/ || 
+                  line ~ /group-title="\[三网\]央卫视直播"/ || 
+                  line ~ /group-title="\[移动\]央卫视直播"/)
         }
+        
+        BEGIN { skip_next = 0 }
         {
-          # 如果这一行未被处理过，则输出
-          if (!(NR in processed_lines)) {
-            print $0
+          if (skip_next) {
+            skip_next = 0
+            next
+          }
+          
+          if ($0 ~ /^#EXTINF:/) {
+            if (isYangshi($0)) {
+              # 如果是央卫视直播，跳过这一行和下一行
+              skip_next = 1
+            } else {
+              # 如果不是央卫视直播，打印这一行
+              print $0
+              getline url_line
+              print url_line
+            }
           }
         }' temp_all.m3u >> kulaoTV.m3u
         
-        # 清理临时文件
-        rm -f processed.txt
+        # 统计结果
+        echo ""
+        echo "排序完成！最终文件统计："
+        echo "----------------------------------------"
         
-        # 统计总数
         total=$(grep -c "^#EXTINF" kulaoTV.m3u || echo 0)
-        echo "排序完成！最终文件共有 $total 个频道"
+        echo "总频道数: $total"
         
-        # 验证央卫视直播是否还在
-        echo "验证央卫视直播数量："
+        echo ""
+        echo "按顺序验证央卫视直播："
         for group in "${order[@]}"; do
           count=$(grep -c "group-title=\"$group\"" kulaoTV.m3u || echo 0)
           echo "  $group: $count"
+          
+          # 显示前几个频道的名称作为验证
+          if [ $count -gt 0 ]; then
+            echo "    示例频道:"
+            grep -B1 "group-title=\"$group\"" kulaoTV.m3u | grep "^#EXTINF" | head -3 | sed 's/.*,//' | sed 's/^/      /'
+          fi
         done
         
     - name: 显示结果统计
@@ -212,16 +237,22 @@ jobs:
         echo "大小：$(wc -c < kulaoTV.m3u) 字节"
         echo "频道总数：$(grep -c "^#EXTINF" kulaoTV.m3u || echo 0)"
         echo ""
-        echo "各分类频道数量："
-        echo "央卫视直播分类："
-        for group in "[联通]央卫视直播" "[电信]央卫视直播" "[三网]央卫视直播" "[移动]央卫视直播"; do
+        echo "按指定顺序的央卫视直播："
+        order=("[联通]央卫视直播" "[电信]央卫视直播" "[三网]央卫视直播" "[移动]央卫视直播")
+        
+        yangshi_total=0
+        for group in "${order[@]}"; do
           count=$(grep -c "group-title=\"$group\"" kulaoTV.m3u || echo 0)
-          echo "  $group: $count"
+          printf "  %-20s: %3d\n" "$group" $count
+          yangshi_total=$((yangshi_total + count))
         done
+        echo "  央卫视直播合计: $yangshi_total"
         echo ""
+        
         echo "其他分类："
-        grep "group-title=" kulaoTV.m3u 2>/dev/null | grep -v -E 'group-title="\[(联通|电信|三网|移动)\]央卫视直播"' | grep -o 'group-title="[^"]*"' | sort | uniq -c || echo "  无其他分类"
+        grep "group-title=" kulaoTV.m3u 2>/dev/null | grep -v -E 'group-title="\[(联通|电信|三网|移动)\]央卫视直播"' | grep -o 'group-title="[^"]*"' | sort | uniq -c | sort -rn || echo "  无其他分类"
         echo ""
+        
         echo "凤凰系列频道："
         grep -E 'tvg-name="(凤凰中文|凤凰资讯|鳳凰中文)"' kulaoTV.m3u 2>/dev/null | sed 's/.*tvg-name="\([^"]*\)".*/\1/' | sort | uniq -c || echo "  无凤凰频道"
         echo "----------------------------------------"
@@ -238,13 +269,12 @@ jobs:
           exit 1
         fi
         
-        # 特别检查央卫视直播是否还在
-        yangshi_total=$(grep -c -E 'group-title="\[(联通|电信|三网|移动)\]央卫视直播"' kulaoTV.m3u || echo 0)
-        if [ $yangshi_total -eq 0 ]; then
-          echo "⚠️ 警告：文件中没有找到央卫视直播频道"
-        else
-          echo "✅ 找到 $yangshi_total 个央卫视直播频道"
-        fi
+        # 验证排序顺序
+        echo "验证排序顺序..."
+        
+        # 获取文件中出现的所有央卫视直播group-title（按出现顺序）
+        echo "文件中央卫视直播出现顺序："
+        grep "group-title=" kulaoTV.m3u | grep -E 'group-title="\[(联通|电信|三网|移动)\]央卫视直播"' | head -10 | sed 's/.*group-title="\([^"]*\)".*/\1/' | uniq -c
         
         echo "✅ 文件检查通过"
         
@@ -265,18 +295,4 @@ jobs:
           fi
         else
           echo "⚠️ 警告：kulaoTV.m3u文件不存在或为空，跳过提交"
-        fi
-        
-    - name: 提取凤凰频道到单独文件（可选）
-      run: |
-        echo "#EXTM3U" > fenghuang_channels.m3u
-        grep -B1 -E 'tvg-name="(凤凰中文|凤凰资讯|鳳凰中文)"' kulaoTV.m3u 2>/dev/null | grep -v "^--$" >> fenghuang_channels.m3u || true
-        
-        if [ -s fenghuang_channels.m3u ] && [ $(grep -c "^#EXTINF" fenghuang_channels.m3u 2>/dev/null || echo 0) -gt 0 ]; then
-          echo "✅ 已提取凤凰频道到 fenghuang_channels.m3u"
-          echo "凤凰频道数量：$(grep -c "^#EXTINF" fenghuang_channels.m3u)"
-          git add fenghuang_channels.m3u 2>/dev/null || true
-        else
-          echo "未找到凤凰系列频道"
-          rm -f fenghuang_channels.m3u
         fi
