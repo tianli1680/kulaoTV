@@ -30,6 +30,18 @@ jobs:
         run: |
           python process_m3u.py
       
+      - name: Add update date to M3U file
+        run: |
+          # 获取当前日期并添加到文件开头
+          CURRENT_DATE=$(date '+%Y-%m-%d %H:%M:%S')
+          # 创建临时文件，添加更新日期注释
+          echo "# 更新日期: $CURRENT_DATE" > temp.m3u
+          echo "" >> temp.m3u
+          # 将原文件内容追加到临时文件
+          cat kulaoTV.m3u >> temp.m3u
+          # 替换原文件
+          mv temp.m3u kulaoTV.m3u
+      
       - name: Commit and push changes
         run: |
           git config --local user.email "action@github.com"
