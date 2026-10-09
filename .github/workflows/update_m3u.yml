@@ -35,7 +35,7 @@ jobs:
           # 获取当前日期
           CURRENT_DATE=$(date '+%Y-%m-%d %H:%M:%S')
           # 在文件开头插入更新日期
-          sed -i "1i# 更新日期: $CURRENT_DATE" kulaoTV.m3u
+          # sed -i "1i# 更新日期: $CURRENT_DATE" kulaoTV.m3u
       
       - name: Commit and push changes
         run: |
